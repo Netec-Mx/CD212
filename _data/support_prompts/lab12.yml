@@ -1,0 +1,308 @@
+# Prompts de apoyo para la Práctica 12
+# El slug del laboratorio debe ser: lab12
+
+tarea1:
+  title: "Explicar la Tarea 1 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 1 de la
+    Práctica 12 de Couchbase Server.
+
+    Preparé el subdirectorio lab12 dentro del directorio raíz del curso y
+    confirmé que la terminal integrada de Visual Studio Code utilizara
+    Git Bash.
+
+    Después definí variables de entorno para centralizar las credenciales
+    del administrador, las URLs de Web Console, Query Service y Search
+    Service, así como los nombres de los índices y del alias que se
+    utilizarían durante la práctica.
+
+    Verifiqué mediante docker inspect que el contenedor couchbase-lab
+    utilizara exactamente la imagen
+    couchbase/server:enterprise-7.6.2.
+
+    También comprobé mediante docker ps que el contenedor estuviera activo
+    y, si era necesario, lo inicié con docker start.
+
+    Después validé mediante curl que Web Console, Query Service y Search
+    Service respondieran correctamente en los puertos 8091, 8093 y 8094.
+
+    Abrí el Query Editor y ejecuté una consulta sobre
+    travel-sample.inventory.hotel para revisar fields simples como name,
+    description, city y country, así como el primer elemento del array
+    reviews.
+
+    Luego utilicé UNNEST para explorar reviews.content, reviews.author y
+    reviews.ratings.Overall dentro de los documentos hotel.
+
+    También inspeccioné un documento de
+    travel-sample.inventory.landmark para identificar los fields name,
+    content, city y country.
+
+    Finalmente obtuve los conteos reales de las collections hotel y
+    landmark para utilizarlos como referencia durante la validación de
+    los índices Search.
+
+    Explica el propósito de cada variable de entorno y la diferencia entre
+    CB_URL, CB_QUERY_URL y CB_SEARCH_URL.
+
+    Explica cómo funcionan docker inspect, docker ps, docker start, curl y
+    python -m json.tool.
+
+    Explica por qué es importante comprobar la imagen exacta
+    couchbase/server:enterprise-7.6.2 antes de crear índices avanzados.
+
+    Explica cómo funcionan META(), LIMIT, acceso a arrays y UNNEST dentro
+    de SQL++.
+
+    Explica por qué es necesario explorar la estructura JSON antes de
+    definir un mapping Search y qué problemas pueden aparecer si el tipo o
+    la ruta de un field no coinciden con el documento real.
+
+    Explica cómo interpretar los conteos obtenidos, cómo validar que la
+    tarea se completó correctamente y qué errores comunes podrían
+    presentarse.
+
+tarea2:
+  title: "Explicar la Tarea 2 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 2 de la
+    Práctica 12 de Couchbase Server.
+
+    Creé el archivo idx_lab12_hotel_advanced.json dentro del subdirectorio
+    lab12 para conservar una definición reutilizable del índice Search.
+
+    Configuré un índice scoped llamado idx_lab12_hotel_advanced sobre el
+    bucket travel-sample, el scope inventory y la collection hotel.
+
+    Utilicé un mapping estático con dynamic igual a false para controlar
+    exactamente qué fields se indexaban.
+
+    Configuré name como text con analyzer en, Store habilitado, term
+    vectors habilitados e inclusión en _all.
+
+    Configuré description como text con analyzer en, Store deshabilitado,
+    term vectors habilitados e inclusión en _all.
+
+    Configuré city y country como text con analyzer keyword y Store
+    habilitado.
+
+    Después creé una estructura jerárquica para reviews.
+
+    Dentro de reviews configuré content como text con analyzer en,
+    reviews.author como text con analyzer keyword y
+    reviews.ratings.Overall como number.
+
+    También configuré Store para reviews.author y
+    reviews.ratings.Overall, y mantuve reviews.content como field buscable
+    pero no almacenado.
+
+    Validé que el archivo fuera JSON válido mediante python -m json.tool.
+
+    Después creé el índice mediante la REST API scoped y consulté su
+    definición y el endpoint count para confirmar que estuviera asociado
+    a travel-sample.inventory.hotel y tuviera documentos indexados.
+
+    Finalmente revisé el índice desde la sección Search de la Web Console.
+
+    Explica qué es un índice Search scoped y por qué la ruta REST incluye
+    bucket, scope e index.
+
+    Explica qué significa utilizar un mapping estático y por qué dynamic
+    igual a false evita indexar fields no declarados.
+
+    Explica la diferencia entre los tipos text, keyword y number.
+
+    Explica qué hacen los analyzers en, standard y keyword.
+
+    Explica las diferencias entre Index, Store, Include in _all e Include
+    Term Vectors.
+
+    Explica cómo se construye un child field mapping para reviews,
+    ratings y Overall, y por qué Overall debe configurarse como number.
+
+    Explica la función de sourceName, sourceParams, scope_name,
+    collection_names, planParams y scorch.
+
+    Explica cómo interpretar la respuesta de creación, la definición y el
+    conteo del índice, cómo validar que la tarea se completó correctamente
+    y qué errores comunes podrían presentarse.
+
+tarea3:
+  title: "Explicar la Tarea 3 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 3 de la
+    Práctica 12 de Couchbase Server.
+
+    Creé stored-fields-query.json para ejecutar una Match Query sobre el
+    field name y solicitar name, city y country dentro de fields.
+
+    Utilicé esta consulta para comprobar que los fields configurados con
+    Store habilitado podían devolverse directamente en la respuesta
+    Search.
+
+    Después creé non-stored-field-query.json para buscar breakfast dentro
+    de description y solicitar también description dentro de fields.
+
+    Con esta prueba comprobé que description podía utilizarse para buscar
+    porque estaba indexado, aunque no necesariamente apareciera dentro de
+    fields porque Store estaba deshabilitado.
+
+    Luego creé reviews-content-query.json para buscar excellent service
+    dentro de reviews.content y solicitar reviews.author, name y city.
+
+    Después creé reviews-rating-query.json para ejecutar una consulta de
+    rango numérico sobre reviews.ratings.Overall, utilizando min igual a
+    4 y max igual a 5 con límites inclusivos.
+
+    También creé reviews-combined-query.json con una conjunction que
+    combinaba una Match Query sobre reviews.content y una Numeric Range
+    Query sobre reviews.ratings.Overall.
+
+    Ejecuté todas las consultas mediante la REST API scoped de
+    idx_lab12_hotel_advanced y analicé total_hits, hits, fields y
+    fragments.
+
+    Explica la diferencia entre indexar un field y almacenarlo mediante
+    Store.
+
+    Explica por qué un field con Store igual a false puede participar en
+    búsquedas, pero no aparecer en fields.
+
+    Explica cómo funciona una Match Query sobre un field anidado dentro de
+    un array.
+
+    Explica cómo se representa la ruta reviews.content y por qué debe
+    coincidir exactamente con el mapping jerárquico.
+
+    Explica cómo funciona una Numeric Range Query, qué significan min,
+    max, inclusive_min e inclusive_max y por qué Overall debe estar
+    indexado como number.
+
+    Explica cómo funciona conjuncts y por qué ambas condiciones deben
+    cumplirse a nivel del documento.
+
+    Explica además que la coincidencia sobre reviews.content y
+    reviews.ratings.Overall no garantiza que ambos valores pertenezcan al
+    mismo elemento del array reviews.
+
+    Explica cómo interpretar total_hits, fields y fragments, cómo validar
+    que cada consulta funcionó correctamente y qué errores comunes podrían
+    presentarse.
+
+tarea4:
+  title: "Explicar la Tarea 4 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 4 de la
+    Práctica 12 de Couchbase Server.
+
+    Creé el archivo idx_lab12_landmark_search.json para definir un índice
+    Search scoped sobre travel-sample.inventory.landmark.
+
+    Configuré un mapping estático con dynamic igual a false.
+
+    Definí name como text con analyzer en, Store y term vectors
+    habilitados.
+
+    Configuré content como text con analyzer en y Store deshabilitado.
+
+    Configuré city y country como text con analyzer keyword y Store
+    habilitado.
+
+    Validé el archivo JSON y creé idx_lab12_landmark_search mediante la
+    REST API scoped.
+
+    Después consulté el endpoint count para verificar que el índice
+    contuviera documentos de la collection landmark.
+
+    Luego creé alias_lab12_travel_search.json con los targets
+    idx_lab12_hotel_advanced e idx_lab12_landmark_search.
+
+    Creé el alias mediante la API general de índices Search y consulté su
+    definición para verificar que apuntara a los dos índices.
+
+    Finalmente creé alias-search-query.json y ejecuté una búsqueda de
+    museum sobre el field name a través del alias.
+
+    Analicé los IDs y fields devueltos para identificar si los resultados
+    provenían de la collection hotel, de la collection landmark o de
+    ambas.
+
+    Explica qué es un Index Alias y por qué permite utilizar un único
+    nombre lógico para consultar varios índices Search.
+
+    Explica por qué los índices target deben tener fields compatibles
+    cuando se utiliza la misma consulta sobre ambos.
+
+    Explica por qué name, city y country se configuraron de forma similar
+    en los dos índices.
+
+    Explica la diferencia entre crear un índice scoped y crear un alias
+    mediante la ruta general /api/index.
+
+    Explica cómo Search envía la consulta a los índices target y combina
+    los resultados.
+
+    Explica cómo interpretar la definición del alias, los targets, los IDs
+    de los hits y los fields almacenados.
+
+    Explica cómo validar que ambos índices estén disponibles antes de
+    consultar el alias y qué errores comunes podrían presentarse si un
+    target no existe, no está listo o no contiene el field solicitado.
+
+tarea5:
+  title: "Explicar la Tarea 5 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 5 de la
+    Práctica 12 de Couchbase Server.
+
+    Creé idx_lab12_hotel_dynamic.json para definir un índice Search scoped
+    sobre travel-sample.inventory.hotel con default_mapping habilitado y
+    dynamic igual a true.
+
+    A diferencia del índice estático, no declaré properties individuales,
+    por lo que Couchbase detectó e indexó fields automáticamente según su
+    estructura y tipos.
+
+    Validé el archivo JSON y creé idx_lab12_hotel_dynamic mediante la REST
+    API scoped.
+
+    Después descargué las definiciones de
+    idx_lab12_hotel_advanced e idx_lab12_hotel_dynamic y las guardé como
+    static-index-definition.json y dynamic-index-definition.json.
+
+    Utilicé un script de Python para leer ambas definiciones, localizar
+    default_mapping, mostrar el valor de dynamic y contar las properties
+    declaradas explícitamente.
+
+    Luego documenté las diferencias en mapping-comparison.md, comparando
+    configuración inicial, fields indexados, control de tipos, riesgo de
+    indexar información innecesaria, mantenimiento y uso recomendado.
+
+    Finalmente consulté la lista general de índices para confirmar que
+    permanecieran disponibles idx_lab12_hotel_advanced,
+    idx_lab12_landmark_search, alias_lab12_travel_search e
+    idx_lab12_hotel_dynamic.
+
+    Explica la diferencia entre mapping estático y mapping dinámico.
+
+    Explica qué significa que dynamic sea true y cómo Couchbase detecta
+    fields automáticamente.
+
+    Explica por qué el mapping dinámico puede ser útil para prototipos y
+    exploración, pero ofrece menos control sobre los fields indexados.
+
+    Explica por qué el mapping estático requiere mayor planificación, pero
+    permite controlar tipos, analyzers, Store y term vectors.
+
+    Explica cómo funciona la redirección de curl hacia archivos JSON y
+    cómo el script de Python navega por indexDef, params, mapping,
+    default_mapping y properties.
+
+    Explica por qué no se asignaron porcentajes de ahorro ni conclusiones
+    de rendimiento sin medir almacenamiento, indexación y carga de forma
+    rigurosa.
+
+    Explica cómo validar que los cuatro recursos permanecen disponibles,
+    cómo interpretar la comparación final y qué errores comunes podrían
+    presentarse si la definición REST tiene una estructura diferente o el
+    índice todavía está construyéndose.

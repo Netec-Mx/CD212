@@ -1,0 +1,351 @@
+# Prompts de apoyo para la Práctica 13
+# El slug del laboratorio debe ser: lab13
+
+tarea1:
+  title: "Explicar la Tarea 1 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 1 de la
+    Práctica 13 de Couchbase Server.
+
+    Preparé el subdirectorio lab13 dentro del directorio raíz del curso y
+    confirmé que la terminal integrada de Visual Studio Code utilizara
+    Git Bash.
+
+    Después definí variables de entorno para centralizar las credenciales,
+    las URLs de Web Console, Query Service y Search Service, los nombres
+    del bucket, scope, collection e índices, y los nombres completos scoped
+    utilizados por Analyze Document.
+
+    Verifiqué mediante docker inspect que el contenedor couchbase-lab
+    utilizara exactamente la imagen
+    couchbase/server:enterprise-7.6.2.
+
+    También comprobé mediante docker ps que el contenedor estuviera activo
+    y, si era necesario, lo inicié con docker start.
+
+    Después validé mediante curl que Query Service y Search Service
+    respondieran correctamente antes de crear recursos.
+
+    Creé el scope search_es dentro del bucket travel-sample y la collection
+    hotels dentro de ese scope.
+
+    Consulté la definición de scopes y collections para confirmar que
+    search_es.hotels estuviera disponible antes de insertar documentos.
+
+    Luego creé prepare-spanish-data.sql con seis documentos controlados que
+    incluían texto en español, etiquetas HTML, palabras con acentos,
+    variantes singulares y plurales, stop words y códigos SKU con
+    combinaciones de mayúsculas y minúsculas.
+
+    Inserté los documentos mediante UPSERT usando la Query REST API.
+
+    También creé un índice primario sobre
+    travel-sample.search_es.hotels para facilitar las verificaciones SQL++
+    de la collection.
+
+    Finalmente consulté los documentos y revisé los fields sku, name y
+    description para confirmar que los datos necesarios para probar los
+    analyzers estuvieran disponibles.
+
+    Explica el propósito de cada variable de entorno y la diferencia entre
+    CB_URL, CB_QUERY_URL, CB_SEARCH_URL, STANDARD_INDEX, CUSTOM_INDEX,
+    STANDARD_FULL_NAME y CUSTOM_FULL_NAME.
+
+    Explica cómo funcionan docker inspect, docker ps, docker start, curl,
+    python -m json.tool y la redirección de comandos en Git Bash.
+
+    Explica por qué es importante comprobar la imagen exacta
+    couchbase/server:enterprise-7.6.2 antes de crear analyzers e índices
+    Search.
+
+    Explica qué son un bucket, un scope y una collection, y por qué se creó
+    search_es.hotels en lugar de utilizar directamente los documentos en
+    inglés de travel-sample.inventory.hotel.
+
+    Explica cómo funciona UPSERT INTO con múltiples pares KEY y VALUE, por
+    qué permite repetir la práctica sin crear documentos duplicados y qué
+    función cumple el índice primario.
+
+    Explica por qué los documentos contienen HTML, acentos, stop words,
+    singular, plural y códigos SKU, cómo validar que la tarea se completó
+    correctamente y qué errores comunes podrían presentarse.
+
+tarea2:
+  title: "Explicar la Tarea 2 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 2 de la
+    Práctica 13 de Couchbase Server.
+
+    Revisé el pipeline de análisis utilizado por Couchbase Search, formado
+    por character filters, tokenizer y token filters.
+
+    Comprendí que los character filters modifican el texto antes de
+    tokenizarlo, que el tokenizer divide el contenido en tokens y que los
+    token filters transforman o eliminan esos tokens antes de almacenarlos
+    en el índice.
+
+    Después creé idx_lab13_spanish_standard.json como índice de referencia
+    sobre travel-sample.search_es.hotels.
+
+    Configuré un mapping estático con los fields name, description, sku,
+    city y country.
+
+    Asigné el analyzer standard a name y description, y el analyzer keyword
+    a sku, city y country.
+
+    Luego creé idx_lab13_spanish_custom.json con dos analyzers
+    personalizados dentro de params.mapping.analysis.analyzers.
+
+    Configuré spanish_hotel_analyzer con los character filters html y
+    asciifolding, el tokenizer unicode y los token filters to_lower,
+    stop_es y stemmer_es_snowball.
+
+    Configuré sku_analyzer con el tokenizer single y el token filter
+    to_lower para conservar cada código como un único token normalizado.
+
+    Asigné spanish_hotel_analyzer a name y description, sku_analyzer a sku
+    y keyword a city y country.
+
+    Validé ambos archivos mediante python -m json.tool.
+
+    Después creé idx_lab13_spanish_standard e
+    idx_lab13_spanish_custom mediante las rutas REST scoped del bucket
+    travel-sample y el scope search_es.
+
+    Finalmente consulté el endpoint count de ambos índices y confirmé desde
+    la Web Console que no hubiera errores de mapping.
+
+    Explica detalladamente el orden del pipeline de análisis y qué ocurre
+    en cada etapa.
+
+    Explica la diferencia entre character filters, tokenizer y token
+    filters.
+
+    Explica qué hace el character filter html y por qué elimina etiquetas
+    sin eliminar el texto contenido dentro de ellas.
+
+    Explica qué hace asciifolding y cómo ayuda a comparar cafe con café o
+    habitacion con habitación.
+
+    Explica cómo funciona el tokenizer unicode en texto de lenguaje natural.
+
+    Explica las funciones de to_lower, stop_es y
+    stemmer_es_snowball.
+
+    Explica por qué el stemming puede producir raíces técnicas que no son
+    palabras completas del diccionario.
+
+    Explica cómo el tokenizer single conserva un SKU completo como un solo
+    token y por qué to_lower permite coincidencias sin depender de
+    mayúsculas o minúsculas.
+
+    Explica la diferencia entre los analyzers standard, keyword,
+    spanish_hotel_analyzer y sku_analyzer.
+
+    Explica qué significa mapping estático, por qué dynamic está
+    deshabilitado y qué funciones cumplen Index, Store, Include Term
+    Vectors e Include in _all.
+
+    Explica por qué los índices utilizan rutas REST scoped, cómo interpretar
+    la respuesta de creación y el conteo de documentos, cómo validar que la
+    tarea se completó correctamente y qué errores comunes podrían
+    presentarse.
+
+tarea3:
+  title: "Explicar la Tarea 3 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 3 de la
+    Práctica 13 de Couchbase Server.
+
+    Creé analyze-spanish-document.json con un documento de prueba que
+    contenía un SKU en mayúsculas, texto en español, etiquetas HTML,
+    acentos, stop words y variantes como habitaciones.
+
+    Validé que el archivo fuera JSON válido antes de enviarlo al Search
+    Service.
+
+    Después envié exactamente el mismo documento al endpoint analyzeDoc
+    del índice estándar y guardé la respuesta en
+    standard-analysis-response.json.
+
+    Luego envié el mismo documento al endpoint analyzeDoc del índice
+    personalizado y guardé la respuesta en
+    custom-analysis-response.json.
+
+    Para utilizar analyzeDoc empleé los nombres completos scoped de los
+    índices:
+
+    travel-sample.search_es.idx_lab13_spanish_standard
+
+    travel-sample.search_es.idx_lab13_spanish_custom
+
+    Después formateé ambas respuestas mediante python -m json.tool y
+    comparé cómo cada mapping procesó name, description, sku, city y
+    country.
+
+    Revisé que las etiquetas HTML no formaran parte de los tokens útiles,
+    que los acentos se normalizaran en el índice personalizado, que las
+    stop words del español se redujeran, que las variantes morfológicas
+    produjeran stems comparables y que el SKU permaneciera como un único
+    token en minúsculas.
+
+    También confirmé que Analyze Document solo simula el procesamiento del
+    documento y no inserta ni modifica información dentro de la collection.
+
+    Explica qué función cumple el endpoint analyzeDoc y por qué se utiliza
+    antes de depender de un analyzer en producción.
+
+    Explica por qué la ruta de analyzeDoc usa el nombre completo scoped del
+    índice en lugar de la ruta scoped utilizada para crear o consultar el
+    índice.
+
+    Explica cómo Couchbase selecciona el analyzer correspondiente a cada
+    field según el mapping.
+
+    Explica cómo interpretar la respuesta de Analyze Document y qué
+    información puede proporcionar sobre tokens, posiciones y fields.
+
+    Explica qué diferencias deberían observarse entre el índice estándar y
+    el índice personalizado respecto de HTML, acentos, stop words, stemming
+    y SKU.
+
+    Explica por qué no debe exigirse una raíz exacta al stemmer y qué
+    propiedades estables deben validarse en su lugar.
+
+    Explica cómo confirmar que Analyze Document no insertó el documento,
+    cómo validar que la tarea se completó correctamente y qué errores
+    comunes podrían presentarse si el índice, el nombre scoped o el JSON
+    fueran incorrectos.
+
+tarea4:
+  title: "Explicar la Tarea 4 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 4 de la
+    Práctica 13 de Couchbase Server.
+
+    Creé query-cafe.json con una Match Query que buscaba cafe sin acento
+    dentro del field description.
+
+    Ejecuté esa consulta contra idx_lab13_spanish_standard y guardé la
+    respuesta en cafe-standard-response.json.
+
+    Después ejecuté exactamente la misma consulta contra
+    idx_lab13_spanish_custom y guardé la respuesta en
+    cafe-custom-response.json.
+
+    Esta comparación permitió observar si asciifolding normalizaba cafe y
+    café dentro del índice personalizado.
+
+    Luego creé query-habitacion.json para buscar habitacion sin acento en
+    singular.
+
+    Ejecuté la consulta contra ambos índices y guardé las respuestas en
+    archivos separados para revisar cómo el stemming y la normalización de
+    acentos afectaban las coincidencias con habitación y habitaciones.
+
+    Después creé query-vista-mar.json con la expresión con vista al mar y
+    operator igual a and.
+
+    Ejecuté esta búsqueda sobre el índice personalizado para comprobar cómo
+    stop_es eliminaba palabras frecuentes antes de evaluar los términos
+    significativos.
+
+    También creé query-sku.json con una Term Query sobre el field sku y el
+    valor htl-madrid-001 en minúsculas.
+
+    Ejecuté la consulta contra idx_lab13_spanish_custom y comprobé que el
+    documento almacenado con el SKU HTL-MADRID-001 pudiera encontrarse
+    porque sku_analyzer convirtió el código completo a minúsculas sin
+    dividirlo.
+
+    Finalmente utilicé Python para leer las respuestas guardadas y mostrar
+    total_hits sin depender de grep sobre JSON.
+
+    Explica cómo funciona una Match Query y por qué utiliza el analyzer
+    asignado al field cuando no se especifica otro analyzer.
+
+    Explica cómo asciifolding permite comparar cafe con café.
+
+    Explica cómo stop_es y stemmer_es_snowball influyen en consultas como
+    habitacion, habitaciones y con vista al mar.
+
+    Explica qué significa operator and después de que el analyzer haya
+    eliminado stop words.
+
+    Explica la diferencia entre Match Query y Term Query.
+
+    Explica por qué Term Query es apropiada para un field SKU que ya fue
+    normalizado como un único token.
+
+    Explica por qué el mismo texto de consulta puede producir diferentes
+    total_hits o scores en dos índices con mappings distintos.
+
+    Explica por qué el índice personalizado no tiene que devolver siempre
+    más resultados para considerarse correcto.
+
+    Explica cómo interpretar total_hits, hits, score y fields, cómo validar
+    que las búsquedas se comportaron de acuerdo con Analyze Document y qué
+    errores comunes podrían presentarse.
+
+tarea5:
+  title: "Explicar la Tarea 5 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 5 de la
+    Práctica 13 de Couchbase Server.
+
+    Descargué la definición registrada de
+    idx_lab13_spanish_custom y la guardé en
+    custom-index-definition-retrieved.json.
+
+    Utilicé un script de Python para localizar
+    params.mapping.analysis.analyzers y mostrar los character filters, el
+    tokenizer y los token filters de spanish_hotel_analyzer y
+    sku_analyzer.
+
+    Después ejecuté otro script de Python para recorrer los type mappings y
+    confirmar qué analyzer, tipo y configuración Store utilizaban los
+    fields name, description, sku, city y country.
+
+    Luego creé validate-lab13.sh para validar de forma automatizada la
+    imagen del contenedor, el conteo de documentos, el conteo de ambos
+    índices, la búsqueda exacta de SKU y la presencia de los dos analyzers
+    personalizados dentro de la definición recuperada.
+
+    El script utilizó funciones pass y fail para contabilizar
+    verificaciones correctas y fallidas.
+
+    También utilizó docker inspect, Query REST API, Search REST API, Python
+    y grep para revisar diferentes componentes del laboratorio.
+
+    Asigné permiso de ejecución al script mediante chmod +x y lo ejecuté
+    desde el subdirectorio lab13.
+
+    Finalmente conservé la collection, los índices, las respuestas y los
+    scripts para disponer de evidencia y poder repetir las validaciones.
+
+    Explica la estructura de una definición de índice Search y cómo navegar
+    por indexDef, params, mapping, analysis, analyzers, types, properties y
+    fields.
+
+    Explica cómo los scripts de Python utilizan json.load, diccionarios,
+    get, bucles y lectura de archivos para extraer configuraciones sin
+    modificar el índice.
+
+    Explica cómo funciona validate-lab13.sh y qué propósito cumplen set -u,
+    las funciones pass y fail, las variables y las comparaciones
+    numéricas.
+
+    Explica cómo el script valida la imagen
+    couchbase/server:enterprise-7.6.2, la existencia de documentos, el
+    conteo de los índices, la consulta de SKU y los analyzers registrados.
+
+    Explica cómo interpretar el resultado final de verificaciones correctas
+    y fallidas.
+
+    Explica por qué se conservaron los recursos en lugar de aplicar una
+    limpieza destructiva.
+
+    Explica cómo validar manualmente cada comprobación si el script falla y
+    qué errores comunes podrían presentarse por variables no definidas,
+    permisos de ejecución, respuestas JSON inesperadas o índices que aún
+    están construyéndose.

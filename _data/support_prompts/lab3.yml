@@ -1,0 +1,133 @@
+# Prompts de apoyo para la Práctica 3
+# El slug del laboratorio debe ser: lab3
+
+tarea1:
+  title: "Explicar la Tarea 1 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 1 de la
+    Práctica 3 de Couchbase Server.
+
+    Preparé el entorno de trabajo de la práctica 3 dentro del directorio
+    raíz del curso, confirmé que el contenedor couchbase-lab estuviera
+    activo y validé el acceso a la Web Console mediante curl.
+
+    Después abrí el Query Editor, comprobé que la collection airline del
+    bucket travel-sample estuviera disponible y ejecuté consultas SQL++
+    con SELECT *, proyección de campos, LIMIT, OFFSET y ORDER BY sobre
+    META().id.
+
+    También comparé dos páginas de resultados para entender por qué una
+    paginación estable necesita mantener el mismo ordenamiento en todas
+    las consultas.
+
+    Explica el propósito de docker ps, docker start, curl y el código
+    HTTP 200. Explica también la diferencia entre SELECT * y la proyección
+    de campos, para qué sirven LIMIT y OFFSET, qué representa META().id,
+    por qué ORDER BY es necesario para una paginación consistente, cómo
+    interpretar las salidas esperadas, cómo validar que la tarea se
+    completó correctamente y qué errores comunes podrían presentarse.
+
+tarea2:
+  title: "Explicar la Tarea 2 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 2 de la
+    Práctica 3 de Couchbase Server.
+
+    Ejecuté consultas SQL++ sobre la collection airline para renombrar
+    campos mediante AS, concatenar valores con el operador || y con la
+    función CONCAT(), y aplicar filtros usando WHERE y LIKE.
+
+    Después recuperé documentos específicos mediante USE KEYS, primero
+    con una sola document key y luego con un arreglo de varias claves.
+    También utilicé META().id para mostrar el identificador real de cada
+    documento recuperado.
+
+    Explica cómo funcionan los alias de campos, la diferencia entre ||
+    y CONCAT(), cómo WHERE filtra documentos, cómo funciona LIKE con el
+    wildcard %, qué es una document key, para qué sirve USE KEYS, por qué
+    esta operación puede ser más directa que un filtro por campos, cómo
+    interpretar META().id y qué ocurre cuando una de las claves
+    solicitadas no existe.
+
+    Explica además cómo interpretar las salidas esperadas, cómo validar
+    que la tarea se completó correctamente y qué errores comunes podrían
+    presentarse.
+
+tarea3:
+  title: "Explicar la Tarea 3 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 3 de la
+    Práctica 3 de Couchbase Server.
+
+    Consulté documentos de las collections airport y airline utilizando
+    comparadores numéricos, BETWEEN, LIKE, DISTINCT y funciones de
+    agregación.
+
+    Filtré aeropuertos por altitud, ordené resultados de forma ascendente
+    y descendente, busqué nombres mediante patrones de texto, obtuve una
+    lista de países sin duplicados y calculé métricas con COUNT, AVG, MIN
+    y MAX.
+
+    Explica cómo funcionan los operadores > y BETWEEN, por qué BETWEEN
+    incluye los valores de ambos extremos, cómo se interpretan los
+    wildcards % en LIKE, qué diferencia existe entre DISTINCT y
+    COUNT(DISTINCT campo), cómo trabajan COUNT, AVG, MIN y MAX y por qué
+    es importante excluir valores MISSING o NULL antes de calcular
+    métricas.
+
+    Explica también cómo comprobar que el ordenamiento es correcto, cómo
+    validar que los valores cumplen los rangos indicados, cómo interpretar
+    las métricas obtenidas y qué errores comunes podrían presentarse.
+
+tarea4:
+  title: "Explicar la Tarea 4 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 4 de la
+    Práctica 3 de Couchbase Server.
+
+    Trabajé con campos opcionales para diferenciar valores MISSING y NULL
+    en documentos JSON. Después agrupé aerolíneas por país mediante
+    GROUP BY y filtré grupos con HAVING.
+
+    También utilicé funciones de texto como UPPER, LOWER, LENGTH y SUBSTR,
+    y funciones de tipo como TOSTRING, TONUMBER y TYPE sobre documentos de
+    airline y airport.
+
+    Explica la diferencia entre un campo MISSING y un campo NULL, cómo
+    funcionan GROUP BY y HAVING, por qué WHERE filtra documentos antes de
+    agrupar y HAVING filtra los grupos después de la agregación.
+
+    Explica además qué hace cada función de texto y de tipo, cómo validar
+    que id_reconvertido coincide con id, por qué TYPE(id) debe devolver
+    number y TYPE(geo) debe devolver object, cómo interpretar las salidas
+    esperadas y qué errores comunes podrían presentarse.
+
+tarea5:
+  title: "Explicar la Tarea 5 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 5 de la
+    Práctica 3 de Couchbase Server.
+
+    Exploré el arreglo schedule dentro de documentos de la collection
+    route y utilicé UNNEST para convertir cada elemento del arreglo en una
+    fila independiente.
+
+    Después conté todos los elementos de schedule para las rutas que salen
+    de SFO y agrupé los resultados por día de la semana para comprobar que
+    la suma de los grupos coincidiera con el total.
+
+    Finalmente analicé la relación entre route y airline mediante el campo
+    airlineid y ejecuté un JOIN ON KEYS para enriquecer cada ruta con el
+    nombre, país e indicativo de la aerolínea. También validé el JOIN desde
+    Git Bash utilizando curl contra el servicio Query.
+
+    Explica qué es un arreglo JSON, cómo funciona UNNEST, por qué los datos
+    de la ruta se repiten para cada elemento del arreglo, cómo funcionan
+    COUNT y GROUP BY después de UNNEST y cómo validar que la suma de los
+    grupos coincide con el total.
+
+    Explica también qué representa airlineid, cómo funciona JOIN ON KEYS,
+    por qué nombre_aerolinea no debe aparecer como null, para qué sirve el
+    endpoint http://localhost:8093/query/service, cómo interpretar status
+    success, cómo validar que la tarea se completó correctamente y qué
+    errores comunes podrían presentarse.

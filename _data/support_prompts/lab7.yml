@@ -1,0 +1,199 @@
+# Prompts de apoyo para la Práctica 7
+# El slug del laboratorio debe ser: lab7
+
+tarea1:
+  title: "Explicar la Tarea 1 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 1 de la
+    Práctica 7 de Couchbase Server.
+
+    Preparé el subdirectorio lab7 dentro del directorio raíz del curso,
+    validé que el contenedor couchbase-lab estuviera activo y confirmé
+    que la Web Console respondiera correctamente.
+
+    Después creé el archivo ecommerce-data-model.md para documentar el
+    diseño de una aplicación de comercio electrónico.
+
+    Identifiqué seis entidades conceptuales: Customer, Product, Category,
+    Order, OrderItem y Review. También documenté las relaciones entre
+    ellas y aclaré que OrderItem es una entidad conceptual, pero no se
+    convertirá en una collection independiente porque se almacenará
+    embebida dentro de Order.
+
+    Finalmente definí cinco patrones de acceso: obtener un pedido por
+    document key, listar pedidos de un cliente, buscar productos por
+    categoría, actualizar el estado de un pedido y consultar reseñas de
+    un producto.
+
+    Explica el propósito de docker ps, docker start y curl, qué significa
+    recibir un código HTTP 200 y cómo validar que Couchbase Server esté
+    disponible antes de comenzar el modelado.
+
+    Explica además la diferencia entre entidad conceptual, documento JSON
+    y collection física, por qué los patrones de acceso deben definirse
+    antes de diseñar los documentos y cómo las relaciones del negocio
+    influyen en las decisiones posteriores.
+
+    Explica cómo validar que la tarea se completó correctamente y qué
+    errores comunes podrían presentarse.
+
+tarea2:
+  title: "Explicar la Tarea 2 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 2 de la
+    Práctica 7 de Couchbase Server.
+
+    Transformé el modelo conceptual en un modelo lógico orientado a
+    documentos JSON.
+
+    Decidí embeber OrderItem dentro de Order porque los ítems siempre se
+    consultan junto con el pedido, tienen un tamaño controlado y no
+    requieren un ciclo de vida independiente.
+
+    También decidí conservar dentro de Order un snapshot del nombre y
+    correo del cliente, así como la dirección de envío utilizada en la
+    compra, para mantener la información histórica aunque el cliente
+    cambie posteriormente sus datos.
+
+    Los productos almacenan referencias a categorías mediante el array
+    category_ids y conservan category_names como información
+    desnormalizada para presentación.
+
+    Las reseñas se mantienen como documentos independientes porque pueden
+    crecer sin límite, necesitan moderación y se consultan de manera
+    separada.
+
+    Finalmente documenté los campos principales de los documentos
+    Customer, Product, Order, Category y Review.
+
+    Explica las diferencias entre embedding y referencing, qué es la
+    desnormalización controlada y qué significa utilizar un snapshot
+    histórico dentro de un documento.
+
+    Explica por qué OrderItem se embebe, por qué Review se mantiene
+    separado, qué ventajas y riesgos existen al duplicar category_names y
+    cómo cada decisión se relaciona con los patrones de acceso.
+
+    Explica también cómo validar que el modelo lógico sea coherente y qué
+    errores comunes de diseño podrían presentarse.
+
+tarea3:
+  title: "Explicar la Tarea 3 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 3 de la
+    Práctica 7 de Couchbase Server.
+
+    Diseñé el modelo físico que se implementaría posteriormente en
+    Couchbase.
+
+    Definí un bucket llamado ecommerce, un scope llamado store y cinco
+    collections: customers, products, orders, categories y reviews.
+
+    También definí un esquema de document keys con prefijos legibles:
+    cust:: para clientes, prod:: para productos, ord:: para pedidos,
+    cat:: para categorías y rev:: para reseñas.
+
+    Aclaré que la document key se utilizará para acceso directo y
+    unicidad, mientras que el orden cronológico de los pedidos se
+    resolverá con el campo created_at.
+
+    Finalmente relacioné cada patrón de acceso con un índice o con acceso
+    directo mediante USE KEYS. Definí los índices
+    idx_lab7_orders_customer, idx_lab7_products_category e
+    idx_lab7_reviews_product.
+
+    Explica la diferencia entre bucket, scope y collection, por qué todas
+    las collections se agrupan en el scope store y por qué OrderItem no
+    requiere una collection propia.
+
+    Explica cómo diseñar una document key, para qué sirven los prefijos,
+    por qué no conviene depender de la key para ordenar datos de negocio y
+    cuándo es mejor acceder mediante document key o mediante un índice.
+
+    Explica además cómo validar que cada patrón de acceso tenga soporte
+    físico y qué errores comunes podrían presentarse al diseñar keys,
+    collections e índices.
+
+tarea4:
+  title: "Explicar la Tarea 4 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 4 de la
+    Práctica 7 de Couchbase Server.
+
+    Creé el bucket ecommerce desde Git Bash de forma controlada, validando
+    primero si ya existía para evitar errores al repetir la práctica.
+
+    Después creé el scope store y las collections customers, products,
+    orders, categories y reviews mediante SQL++ con IF NOT EXISTS.
+
+    También creé índices primarios de desarrollo y los índices secundarios
+    idx_lab7_orders_customer, idx_lab7_products_category,
+    idx_lab7_products_id e idx_lab7_reviews_product.
+
+    El índice de productos utiliza ALL ARRAY para indexar los valores del
+    array category_ids y una condición parcial WHERE active = true.
+
+    Luego inserté mediante UPSERT dos categorías, dos productos, un
+    cliente, dos pedidos y dos reseñas. Los pedidos incluyen ítems
+    embebidos, snapshots del cliente y dirección de envío.
+
+    Finalmente ejecuté una consulta de conteo para comprobar que existiera
+    un cliente, dos productos, dos pedidos, dos categorías y dos reseñas.
+
+    Explica el propósito del bloque condicional de Bash usado para crear
+    el bucket, la diferencia entre INSERT y UPSERT, para qué sirve IF NOT
+    EXISTS y por qué estas técnicas permiten repetir la práctica.
+
+    Explica también para qué se crean índices primarios durante el
+    desarrollo, cómo funciona un índice de array, qué significa que un
+    índice sea parcial y por qué la consulta debe incluir active = true
+    para poder utilizarlo.
+
+    Explica cómo interpretar las salidas, cómo validar que los documentos
+    e índices quedaron correctamente creados y qué errores comunes podrían
+    presentarse.
+
+tarea5:
+  title: "Explicar la Tarea 5 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 5 de la
+    Práctica 7 de Couchbase Server.
+
+    Validé los cinco patrones de acceso definidos al inicio del diseño.
+
+    Para PA-1 recuperé un pedido completo mediante USE KEYS y confirmé que
+    en una sola lectura se obtenían los ítems, el snapshot del cliente y
+    la dirección de envío.
+
+    Para PA-2 listé los pedidos de CUST-0001 ordenados por created_at de
+    forma descendente.
+
+    Para PA-3 busqué productos de la categoría CAT-003 mediante
+    ANY...SATISFIES sobre category_ids y ejecuté EXPLAIN para verificar el
+    uso de idx_lab7_products_category.
+
+    Para PA-4 actualicé el status de un pedido mediante su document key y
+    utilicé NOW_STR para registrar la fecha de modificación.
+
+    Para PA-5 consulté las reseñas aprobadas de PROD-001 y calculé un
+    promedio de rating igual a 4.5.
+
+    También utilicé UNNEST para expandir los ítems embebidos de cada
+    pedido y JOIN para relacionarlos con los documentos actuales de
+    products.
+
+    Finalmente consulté system:indexes para confirmar que todos los
+    índices con prefijo idx_lab7_ estuvieran online.
+
+    Explica cómo funciona USE KEYS, por qué representa un acceso directo,
+    cómo funciona ANY...SATISFIES con un índice de array y cómo interpretar
+    el resultado de EXPLAIN.
+
+    Explica también para qué sirve NOW_STR, cómo funcionan UNNEST y JOIN
+    sobre documentos JSON, qué diferencia existe entre los datos históricos
+    embebidos en Order y el stock actual almacenado en Product, y cómo
+    comprobar que las referencias entre documentos son válidas.
+
+    Explica cómo interpretar las salidas esperadas, cómo validar que la
+    práctica se completó correctamente y qué errores comunes podrían
+    presentarse.

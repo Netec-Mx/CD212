@@ -1,0 +1,183 @@
+# Prompts de apoyo para la Práctica 6
+# El slug del laboratorio debe ser: lab6
+
+tarea1:
+  title: "Explicar la Tarea 1 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 1 de la
+    Práctica 6 de Couchbase Server.
+
+    Preparé el subdirectorio lab6 dentro del directorio raíz del curso,
+    verifiqué que el contenedor couchbase-lab estuviera activo y confirmé
+    que la Web Console y el servicio Eventing respondieran correctamente.
+
+    Después creé los buckets app-data y eventing-meta, el scope workshop
+    y las collections orders, audit-log y quarantine mediante comandos
+    curl ejecutados desde Git Bash dentro de Visual Studio Code.
+
+    También creé índices primarios y secundarios sobre las collections
+    para permitir consultas SQL++ de validación y confirmé su estado
+    mediante system:indexes.
+
+    Explica el propósito de docker ps, docker start y curl, qué significa
+    recibir un código HTTP 200, cómo funciona el endpoint nodeServices y
+    cómo identificar que Eventing está habilitado.
+
+    Explica además la diferencia entre bucket, scope y collection, para
+    qué sirve el bucket eventing-meta, qué información guarda Eventing en
+    la metadata, por qué no debe modificarse manualmente y por qué fueron
+    necesarios los índices primarios y secundarios.
+
+    Explica cómo interpretar las salidas esperadas, cómo validar que la
+    estructura quedó correctamente creada y qué errores comunes podrían
+    presentarse.
+
+tarea2:
+  title: "Explicar la Tarea 2 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 2 de la
+    Práctica 6 de Couchbase Server.
+
+    Creé la Function ProcessOrderEvents desde la sección Eventing de la
+    Web Console.
+
+    Configuré app-data.workshop.orders como source collection y utilicé
+    eventing-meta._default._default como ubicación de metadata.
+
+    Después agregué dos bindings de lectura y escritura: auditLog apuntando
+    a app-data.workshop.audit-log y quarantineCol apuntando a
+    app-data.workshop.quarantine.
+
+    En el editor de JavaScript implementé OnUpdate para procesar mutaciones
+    de documentos de tipo order, validar el campo status, crear registros
+    de auditoría y copiar pedidos inválidos a cuarentena.
+
+    También implementé OnDelete para registrar eliminaciones y expiraciones
+    en audit-log.
+
+    Finalmente configuré un worker, nivel de log INFO y un checkpoint
+    interval de 10000 milisegundos, guardando la Function en estado
+    Undeployed.
+
+    Explica qué es una Function de Eventing, qué representa la source
+    collection, para qué sirve la metadata collection y cómo funcionan
+    los bindings mediante alias.
+
+    Explica la diferencia entre OnUpdate y OnDelete, por qué OnUpdate
+    representa una mutación y no distingue directamente entre INSERT y
+    UPDATE, cómo se utiliza meta.id, para qué sirve Date.now() al construir
+    claves y cómo funciona la lista VALID_STATUSES.
+
+    Explica además para qué sirven worker count, log level y checkpoint
+    interval, qué significa el estado Undeployed, cómo validar que la
+    configuración quedó correcta y qué errores comunes podrían presentarse.
+
+tarea3:
+  title: "Explicar la Tarea 3 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 3 de la
+    Práctica 6 de Couchbase Server.
+
+    Desplegué la Function ProcessOrderEvents seleccionando el procesamiento
+    desde eventos nuevos y esperé hasta que alcanzara el estado Deployed.
+
+    Después inserté un pedido válido en app-data.workshop.orders y esperé
+    algunos segundos para que Eventing procesara la mutación.
+
+    Consulté la collection audit-log para verificar que se hubiera creado
+    un registro con eventType MUTATION, sourceDocId igual a order::1001,
+    status pending y validStatus igual a true.
+
+    Luego actualicé el status del pedido a processing y comprobé que se
+    generara un segundo registro de auditoría.
+
+    Finalmente revisé los logs de la Function para confirmar que cada
+    mutación había sido procesada.
+
+    Explica qué ocurre internamente cuando una Function pasa de Undeployed
+    a Deployed, qué significa desplegar From now, cómo Eventing detecta
+    una inserción o actualización y por qué el procesamiento puede tardar
+    algunos segundos.
+
+    Explica también cómo se construye el documento de auditoría, por qué
+    se genera una clave diferente para cada evento, qué representan
+    eventType, sourceDocId, validStatus, itemCount y totalAmount, y por qué
+    una actualización genera un nuevo registro en lugar de reemplazar el
+    anterior.
+
+    Explica cómo interpretar los logs, cómo validar que la tarea se
+    completó correctamente y qué errores comunes podrían presentarse.
+
+tarea4:
+  title: "Explicar la Tarea 4 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 4 de la
+    Práctica 6 de Couchbase Server.
+
+    Inserté primero un pedido con status completed para confirmar que un
+    valor permitido no fuera copiado a cuarentena.
+
+    Después inserté el pedido order::2002 con el status shipped, que no
+    pertenece a la lista de estados permitidos: pending, processing,
+    completed y cancelled.
+
+    La Function ProcessOrderEvents validó el documento, creó un registro
+    de auditoría con validStatus igual a false y generó una copia del
+    pedido en la collection quarantine.
+
+    Consulté quarantine para verificar el originalDocId, la fecha de
+    cuarentena, el motivo, el status inválido y el contenido del documento
+    original.
+
+    También consulté audit-log y revisé los logs de Eventing para confirmar
+    que la validación y la copia se ejecutaron correctamente.
+
+    Explica cómo funciona la validación con VALID_STATUSES e indexOf, qué
+    significa que indexOf devuelva -1, cómo se construye quarantineReason
+    y por qué el documento se copia a quarantine en lugar de eliminarse
+    de orders.
+
+    Explica además la diferencia entre copiar y mover un documento, por
+    qué conservar el original facilita la revisión, por qué pueden
+    generarse varios registros de cuarentena para un mismo documento y
+    cómo se relacionan audit-log y quarantine dentro del flujo.
+
+    Explica cómo interpretar las salidas esperadas, cómo validar que la
+    tarea se completó correctamente y qué errores comunes podrían
+    presentarse.
+
+tarea5:
+  title: "Explicar la Tarea 5 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 5 de la
+    Práctica 6 de Couchbase Server.
+
+    Eliminé el documento order::1001 de la collection orders para activar
+    el handler OnDelete de la Function ProcessOrderEvents.
+
+    Después consulté audit-log y confirmé que se hubiera creado un registro
+    con eventType DELETE, sourceDocId order::1001 y expired igual a false.
+
+    También revisé las métricas disponibles de Eventing, incluyendo eventos
+    procesados, fallos, mutaciones pendientes y actividad reciente.
+
+    Luego ejecuté consultas finales para resumir los registros de auditoría
+    y los documentos copiados a cuarentena.
+
+    Finalmente realicé el undeploy de ProcessOrderEvents y comprobé que,
+    después de insertar order::9999, ya no se generaran nuevos registros
+    de auditoría.
+
+    Explica cómo funciona OnDelete, qué diferencia existe entre una
+    eliminación manual y una expiración por TTL, para qué sirve el campo
+    expired y cómo Eventing registra la eliminación aunque el documento
+    original ya no esté disponible.
+
+    Explica también qué representan las métricas de eventos procesados,
+    fallos y mutaciones pendientes, qué ocurre internamente durante
+    Undeploy, por qué la Function conserva su código y configuración y
+    cómo comprobar que dejó de procesar eventos.
+
+    Explica cómo interpretar las validaciones finales, cómo confirmar que
+    el ciclo deploy, prueba, observación y undeploy se completó
+    correctamente y qué errores comunes podrían presentarse.

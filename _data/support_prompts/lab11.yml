@@ -1,0 +1,270 @@
+# Prompts de apoyo para la Práctica 11
+# El slug del laboratorio debe ser: lab11
+
+tarea1:
+  title: "Explicar la Tarea 1 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 1 de la
+    Práctica 11 de Couchbase Server.
+
+    Preparé el subdirectorio lab11 dentro del directorio raíz del curso
+    y confirmé que la terminal integrada de Visual Studio Code utilizara
+    Git Bash.
+
+    Después definí variables de entorno para centralizar las credenciales
+    del administrador, las URLs de Web Console, Query Service y Search
+    Service, el nombre del índice idx_lab10_hotel_search y la ruta REST
+    scoped asociada al bucket travel-sample y al scope inventory.
+
+    Verifiqué mediante docker inspect que el contenedor couchbase-lab
+    utilizara exactamente la imagen
+    couchbase/server:enterprise-7.6.2.
+
+    También comprobé mediante docker ps que el contenedor estuviera activo
+    y, si era necesario, lo inicié con docker start.
+
+    Después validé mediante curl que Web Console, Query Service y Search
+    Service respondieran correctamente en los puertos 8091, 8093 y 8094.
+
+    Consulté la definición del índice Search scoped
+    idx_lab10_hotel_search mediante la REST API y confirmé que estuviera
+    asociado a travel-sample.inventory.hotel.
+
+    También consulté el endpoint count para comprobar que el índice
+    contuviera documentos y ejecuté una consulta mínima para verificar que
+    los campos name, city, country y description aparecieran dentro de
+    fields.
+
+    Explica el propósito de cada variable de entorno, especialmente la
+    diferencia entre CB_URL, CB_QUERY_URL, CB_SEARCH_URL, FTS_INDEX y
+    FTS_BASE_URL.
+
+    Explica cómo funcionan docker inspect, docker ps, docker start, curl y
+    python -m json.tool.
+
+    Explica por qué es importante comprobar la imagen exacta
+    couchbase/server:enterprise-7.6.2 y qué diferencias operativas podría
+    haber si se utilizara otra edición o versión.
+
+    Explica qué es un índice Search scoped, por qué la ruta REST incluye
+    bucket, scope e index, y cómo interpretar la definición y el conteo
+    del índice.
+
+    Explica además por qué los campos solo aparecen dentro de fields si
+    fueron configurados con Store, cómo validar que la tarea se completó
+    correctamente y qué errores comunes podrían presentarse.
+
+tarea2:
+  title: "Explicar la Tarea 2 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 2 de la
+    Práctica 11 de Couchbase Server.
+
+    Creé varios archivos JSON dentro del subdirectorio lab11 para ejecutar
+    Query String Queries contra idx_lab10_hotel_search mediante la REST
+    API scoped de Couchbase Search.
+
+    En query-string-pool.json ejecuté una búsqueda simple por el término
+    pool y solicité campos almacenados y fragments con resaltado HTML.
+
+    Después creé query-string-required.json con la expresión
+    +pool +breakfast para exigir que ambos términos participaran en la
+    coincidencia.
+
+    Luego creé query-string-exclude.json con la expresión
+    +pool -expensive para exigir pool y excluir documentos que contuvieran
+    expensive.
+
+    También creé query-string-or.json con la expresión pool OR spa para
+    permitir que cualquiera de los dos términos generara una coincidencia.
+
+    Después utilicé query-string-field.json con name:hotel para restringir
+    la búsqueda exclusivamente al field name.
+
+    Finalmente ejecuté query-string-wildcard.json con swim* para buscar
+    términos indexados que comenzaran con el prefijo swim.
+
+    En cada consulta revisé total_hits, max_score, hits, fields y
+    fragments, y documenté los resultados en lab11-search-results.md.
+
+    Explica qué es una Query String Query y por qué resulta útil para
+    exploración interactiva, pero no siempre es la mejor opción para una
+    aplicación de producción.
+
+    Explica el significado de los operadores +, -, OR, la sintaxis
+    campo:valor y el wildcard *.
+
+    Explica cómo se interpreta +pool +breakfast, por qué
+    +pool -expensive aplica inclusión y exclusión, y cómo cambia la
+    amplitud de resultados con pool OR spa.
+
+    Explica que swim* opera sobre términos indexados y no necesariamente
+    sobre el inicio del texto completo del campo.
+
+    Explica además cómo interpretar total_hits, max_score, fields y
+    fragments, cómo validar que cada consulta produjo el comportamiento
+    esperado y qué errores comunes podrían presentarse.
+
+tarea3:
+  title: "Explicar la Tarea 3 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 3 de la
+    Práctica 11 de Couchbase Server.
+
+    Creé term-country.json para ejecutar una Term Query sobre el field
+    country con el valor United Kingdom.
+
+    Utilicé ese field porque fue configurado con el analizador keyword
+    durante la práctica 10, por lo que el contenido completo del país se
+    conserva como un único término indexado.
+
+    Después creé match-country.json para ejecutar una Match Query sobre el
+    mismo field y comparar cómo se comporta una búsqueda exacta frente a
+    una búsqueda que pasa por el analizador definido para el campo.
+
+    Luego creé conjunction-query.json con dos subconsultas obligatorias:
+    una búsqueda de pool y otra búsqueda de breakfast dentro de
+    description.
+
+    Después creé disjunction-min1.json con tres condiciones alternativas:
+    beach, airport y spa, utilizando min igual a 1 para exigir al menos una
+    coincidencia.
+
+    Dupliqué la consulta como disjunction-min2.json y cambié min a 2 para
+    exigir que al menos dos de las tres condiciones coincidieran.
+
+    Comparé total_hits entre min igual a 1 y min igual a 2 y confirmé que
+    el número de resultados de la consulta más restrictiva fuera igual o
+    menor.
+
+    Finalmente documenté los conteos y observaciones en
+    lab11-search-results.md.
+
+    Explica la diferencia entre Term Query y Match Query, especialmente en
+    relación con el análisis de texto.
+
+    Explica por qué una Term Query debe alinearse con los tokens realmente
+    almacenados en el índice y por qué el analizador keyword es apropiado
+    para valores completos como United Kingdom.
+
+    Explica qué significa conjuncts, por qué todas sus condiciones deben
+    coincidir y cómo se diferencia de una consulta con operator and dentro
+    de un único Match Query.
+
+    Explica qué significa disjuncts, cómo funciona el parámetro min y por
+    qué total_hits con min igual a 1 debe ser mayor o igual que total_hits
+    con min igual a 2.
+
+    Explica cómo validar los resultados sin depender únicamente de
+    fragments, cómo identificar un field que no esté indexado y qué
+    errores comunes podrían presentarse.
+
+tarea4:
+  title: "Explicar la Tarea 4 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 4 de la
+    Práctica 11 de Couchbase Server.
+
+    Creé page-1.json y page-2.json para implementar paginación sobre una
+    búsqueda de hotel en el field name.
+
+    En la primera consulta utilicé from igual a 0 y size igual a 5 para
+    solicitar los primeros cinco resultados.
+
+    En la segunda consulta utilicé from igual a 5 y size igual a 5 para
+    solicitar los siguientes cinco resultados.
+
+    En ambos archivos configuré sort con -_score y _id.
+
+    El criterio -_score ordenó los documentos por relevancia descendente,
+    mientras que _id funcionó como criterio secundario estable cuando
+    varios documentos compartían un score similar o idéntico.
+
+    Ejecuté ambas consultas mediante curl y guardé las respuestas en
+    page-1-response.json y page-2-response.json.
+
+    Después utilicé Python para leer ambos archivos, extraer los IDs,
+    comparar los conjuntos y verificar que no existieran documentos
+    duplicados entre las dos páginas.
+
+    También extraje total_hits, max_score y took, y convertí took de
+    nanosegundos a milisegundos para facilitar su lectura.
+
+    Explica cómo funcionan from y size, cómo se calcula el desplazamiento
+    de cada página y qué limitaciones puede tener una paginación basada en
+    offsets.
+
+    Explica por qué una paginación necesita un orden estable y qué función
+    cumplen -_score y _id.
+
+    Explica el propósito de redirigir la respuesta con > hacia archivos
+    JSON y por qué es útil conservar evidencias de cada página.
+
+    Explica cómo los scripts de Python cargan JSON, recorren hits, crean
+    conjuntos de IDs y detectan intersecciones.
+
+    Explica qué representan total_hits, max_score y took, y por qué took no
+    incluye necesariamente toda la latencia de red o de la Web Console.
+
+    Explica cómo validar que la paginación fue correcta y qué errores
+    comunes podrían presentarse si cambia el sort, el from o el contenido
+    del índice entre consultas.
+
+tarea5:
+  title: "Explicar la Tarea 5 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 5 de la
+    Práctica 11 de Couchbase Server.
+
+    Abrí el Query Editor de la Web Console y ejecuté consultas SQL++ sobre
+    travel-sample.inventory.hotel utilizando las funciones SEARCH() y
+    SEARCH_SCORE().
+
+    En la primera consulta utilicé SEARCH() con una Match Query sobre los
+    términos pool y breakfast dentro de description, y ordené los
+    resultados por relevance_score descendente.
+
+    Después combiné Search con el filtro estructurado
+    country = United Kingdom para demostrar que SQL++ puede aplicar
+    condiciones exactas mientras Search resuelve la coincidencia de texto
+    libre.
+
+    Luego ejecuté una consulta Search compuesta con disjuncts para buscar
+    pool, spa o gym dentro de description.
+
+    También combiné esa misma búsqueda con GROUP BY y COUNT(*) para
+    obtener el número de hoteles coincidentes por país.
+
+    Utilicé explícitamente el índice idx_lab10_hotel_search dentro de las
+    opciones de SEARCH() para evitar ambigüedad cuando existan varios
+    índices compatibles.
+
+    Finalmente creé search-sqlpp.json y ejecuté una consulta SQL++ mediante
+    la Query REST API para comprobar que la integración también funciona
+    fuera de la Web Console.
+
+    Explica qué función cumple SEARCH(), qué parte de la consulta procesa
+    Couchbase Search y qué parte procesa el servicio Query.
+
+    Explica qué representa SEARCH_SCORE(h), por qué se asocia con el alias
+    h y por qué el score debe utilizarse principalmente para ordenar
+    resultados dentro de la misma consulta.
+
+    Explica cómo se combina una condición Search con un filtro estructurado
+    como country = United Kingdom.
+
+    Explica por qué la consulta utiliza
+    travel-sample.inventory.hotel en lugar del bucket completo y por qué
+    esto debe coincidir con el alcance del índice scoped.
+
+    Explica el propósito de indicar
+    {"index":"idx_lab10_hotel_search"} dentro de SEARCH().
+
+    Explica cómo SQL++ puede proyectar campos, aplicar filtros, ordenar,
+    limitar, agrupar y contar documentos después de que Search determine
+    las coincidencias textuales.
+
+    Explica cómo funciona la ejecución mediante la Query REST API, cómo
+    interpretar status, results y errors, cómo validar que la tarea se
+    completó correctamente y qué errores comunes podrían presentarse con
+    el alias, la collection o el nombre del índice.

@@ -1,0 +1,253 @@
+# Prompts de apoyo para la Práctica 10
+# El slug del laboratorio debe ser: lab10
+
+tarea1:
+  title: "Explicar la Tarea 1 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 1 de la
+    Práctica 10 de Couchbase Server.
+
+    Preparé el subdirectorio lab10 dentro del directorio raíz del curso,
+    definí variables de entorno para centralizar las credenciales del
+    administrador y las URLs de Web Console, Query Service y Search
+    Service.
+
+    Después verifiqué que el contenedor couchbase-lab estuviera activo y
+    confirmé mediante curl que los puertos 8091, 8093 y 8094 respondieran
+    correctamente.
+
+    También consulté mediante la Query REST API el número de documentos
+    disponibles en travel-sample.inventory.hotel y conservé ese valor
+    como referencia para compararlo posteriormente con el conteo del
+    índice Search.
+
+    Luego ejecuté una búsqueda SQL++ sobre el campo description utilizando
+    LOWER y LIKE con los términos luxury y airport.
+
+    Revisé la cantidad de resultados, el orden de salida, el tiempo
+    aproximado y el plan de ejecución.
+
+    También ejecuté una búsqueda con el término mal escrito luxurry para
+    comprobar que LIKE compara cadenas de caracteres y no realiza
+    corrección ortográfica, análisis lingüístico ni cálculo de relevancia.
+
+    Finalmente documenté las limitaciones observadas en el archivo
+    search-comparison.md.
+
+    Explica el propósito de las variables CB_URL, CB_QUERY_URL,
+    CB_SEARCH_URL y FTS_INDEX, así como la función de los puertos 8091,
+    8093 y 8094.
+
+    Explica cómo funcionan docker ps, docker start, curl,
+    --data-urlencode y python -m json.tool.
+
+    Explica qué hace LOWER, cómo funciona LIKE con comodines, por qué los
+    resultados no están ordenados por relevancia y por qué una búsqueda
+    por caracteres no equivale a una búsqueda de texto completo.
+
+    Explica además qué debe observarse en el plan de ejecución, por qué
+    los tiempos obtenidos no constituyen un benchmark formal, cómo validar
+    que la tarea se completó correctamente y qué errores comunes podrían
+    presentarse.
+
+tarea2:
+  title: "Explicar la Tarea 2 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 2 de la
+    Práctica 10 de Couchbase Server.
+
+    Abrí la sección Search de la Web Console y creé el índice scoped
+    idx_lab10_hotel_search sobre el bucket travel-sample, el scope
+    inventory y la collection hotel.
+
+    Configuré el índice con almacenamiento scorch, default mapping
+    habilitado y dynamic deshabilitado para utilizar un mapping estático.
+
+    Después agregué cuatro field mappings.
+
+    El campo name fue configurado como text con analizador standard.
+
+    El campo description fue configurado como text con analizador en para
+    aplicar normalización y stemming en inglés.
+
+    Los campos city y country fueron configurados como text con analizador
+    keyword para conservar su contenido como un valor completo.
+
+    En los cuatro campos habilité Index y Store. También incluí name y
+    description en el campo virtual _all.
+
+    Después creé el índice, esperé a que estuviera disponible y verifiqué
+    su definición mediante la REST API scoped.
+
+    Finalmente consulté el endpoint count para comparar el número de
+    documentos indexados con el número real de documentos de la
+    collection hotel.
+
+    Explica qué es un índice Search scoped y la diferencia entre bucket,
+    scope, collection e index name.
+
+    Explica qué significa utilizar mapping estático, por qué se desactiva
+    dynamic y qué ventaja ofrece indexar únicamente los campos
+    necesarios.
+
+    Explica las diferencias entre los analizadores standard, en y keyword,
+    qué es el stemming y por qué city y country se tratan de forma
+    diferente a description.
+
+    Explica la diferencia entre Index, Store e Include in _all, y por qué
+    los campos deben almacenarse para aparecer dentro de fields en la
+    respuesta FTS.
+
+    Explica cómo interpretar la definición y el conteo del índice, por qué
+    la indexación puede tardar algunos segundos, cómo validar que la tarea
+    se completó correctamente y qué errores comunes podrían presentarse.
+
+tarea3:
+  title: "Explicar la Tarea 3 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 3 de la
+    Práctica 10 de Couchbase Server.
+
+    Creé tres archivos JSON para ejecutar consultas básicas contra
+    idx_lab10_hotel_search mediante la REST API scoped.
+
+    En match-query.json configuré una match query sobre description con
+    los términos pool, wifi y breakfast, utilizando operator or para
+    aceptar documentos que contuvieran uno o varios términos.
+
+    También solicité cinco resultados, campos almacenados y fragments con
+    resaltado HTML.
+
+    Después ejecuté la consulta con curl e identifiqué total_hits,
+    max_score, hits, score, fields y fragments.
+
+    En phrase-query.json configuré una match_phrase query para buscar free
+    parking como una frase, conservando el orden y la proximidad de los
+    términos analizados.
+
+    En fuzzy-query.json configuré una match query con el término mal
+    escrito luxurry y fuzziness igual a 1 para tolerar una diferencia de
+    caracteres.
+
+    Finalmente comparé la intención y el comportamiento de match,
+    match_phrase y fuzzy match, y documenté las observaciones en
+    search-comparison.md.
+
+    Explica cómo funciona una match query, qué significa operator or y
+    cómo el analizador transforma el texto antes de buscarlo.
+
+    Explica cómo funciona match_phrase y por qué no es exactamente
+    equivalente a LIKE, aunque ambas técnicas puedan representar una
+    intención de búsqueda por frase.
+
+    Explica qué es fuzziness, qué significa el valor 1 y por qué fuzzy
+    search no debe confundirse con stemming.
+
+    Explica la estructura de una respuesta Search, incluyendo total_hits,
+    max_score, hits, score, fields y fragments.
+
+    Explica para qué sirven size, from, highlight y fields, cómo validar
+    que las consultas devolvieron resultados coherentes y qué errores
+    comunes podrían presentarse.
+
+tarea4:
+  title: "Explicar la Tarea 4 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 4 de la
+    Práctica 10 de Couchbase Server.
+
+    Creé prefix-query.json para ejecutar una prefix query sobre el campo
+    description utilizando el prefijo beach.
+
+    Ejecuté la consulta mediante la REST API y comprobé que prefix busca
+    tokens indexados que comienzan con el prefijo indicado, sin exigir que
+    todo el contenido del campo description comience con esa palabra.
+
+    Después creé compound-query.json con una consulta disjunctiva que
+    buscaba luxury en name y description, así como airport en
+    description.
+
+    Asigné diferentes valores de boost para aumentar la contribución de
+    ciertas coincidencias al score: luxury en name recibió boost 3,
+    luxury en description recibió boost 2 y airport en description
+    recibió boost 1.5.
+
+    Ejecuté la consulta, revisé los primeros resultados y documenté el
+    nombre del hotel, el score, la coincidencia principal y el boost
+    aplicable.
+
+    También creé explain-query.json con size igual a 1 y explain
+    habilitado para inspeccionar el desglose de relevancia del primer
+    documento.
+
+    Revisé score, explanation.value, explanation.description y
+    explanation.details.
+
+    Explica cómo funciona una prefix query sobre tokens indexados y por
+    qué no representa una comparación contra el inicio del texto completo.
+
+    Explica qué son disjuncts, qué significa min igual a 1 y cómo se
+    interpreta una consulta donde basta con cumplir una de varias
+    condiciones.
+
+    Explica qué es un boost, cómo puede modificar el ranking y por qué un
+    boost no garantiza por sí solo que un documento ocupe la primera
+    posición.
+
+    Explica qué representa el score, por qué se utiliza principalmente
+    para ordenar resultados dentro de la misma consulta y por qué no debe
+    interpretarse como porcentaje.
+
+    Explica para qué sirve explain, cómo interpretar su estructura sin
+    asumir que el score es una métrica absoluta, cómo validar la tarea y
+    qué errores comunes podrían presentarse.
+
+tarea5:
+  title: "Explicar la Tarea 5 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 5 de la
+    Práctica 10 de Couchbase Server.
+
+    Ejecuté nuevamente una consulta SQL++ con LIKE sobre description para
+    buscar luxury o airport.
+
+    Después creé equivalent-search.json con una consulta Search
+    disjuntiva que buscaba los mismos términos sobre el mismo campo, con
+    el objetivo de comparar una intención de búsqueda equivalente.
+
+    Ejecuté la consulta mediante la REST API scoped y comparé ambos
+    enfoques en criterios como análisis lingüístico, relevancia, score,
+    highlight, fuzzy search, boost, filtros estructurados y uso
+    recomendado.
+
+    También validé la definición del índice, el conteo de documentos
+    indexados y una match query sencilla sobre el término pool.
+
+    Finalmente documenté una conclusión indicando que SQL++ es adecuado
+    para filtros exactos, rangos, agregaciones y operaciones
+    estructuradas, mientras que Couchbase Search es adecuado para texto
+    libre, relevancia, análisis lingüístico, fuzzy search, prefix search,
+    resaltado y boosts.
+
+    Explica por qué es importante comparar consultas con una intención
+    equivalente y por qué comparar búsquedas diferentes produciría una
+    conclusión incorrecta.
+
+    Explica las diferencias entre SQL++ LIKE y Couchbase Search, y en qué
+    escenarios debe utilizarse cada tecnología.
+
+    Explica qué significa que Couchbase Search esté optimizado para texto
+    libre y que SQL++ esté optimizado para consultas estructuradas.
+
+    Explica cómo interpretar total_hits, count y los resultados devueltos,
+    y por qué una pequeña diferencia temporal entre documentos de la
+    collection y documentos indexados puede deberse a que Search trabaja
+    de forma asíncrona.
+
+    Explica cómo validar que el índice permanece disponible, que la
+    consulta pool devuelve resultados y que la práctica se completó
+    correctamente.
+
+    Explica también qué errores comunes podrían presentarse al utilizar
+    la ruta REST scoped, los analizadores, los campos almacenados o un
+    índice que todavía está en proceso de construcción.

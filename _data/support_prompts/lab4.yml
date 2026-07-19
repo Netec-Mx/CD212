@@ -1,0 +1,154 @@
+# Prompts de apoyo para la Práctica 4
+# El slug del laboratorio debe ser: lab4
+
+tarea1:
+  title: "Explicar la Tarea 1 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 1 de la
+    Práctica 4 de Couchbase Server.
+
+    Preparé el subdirectorio lab4 dentro del directorio raíz del curso,
+    confirmé que el contenedor couchbase-lab estuviera activo y validé
+    que la Web Console respondiera correctamente mediante curl.
+
+    Después ingresé al Query Editor y consulté system:indexes para
+    inventariar los índices existentes en el bucket travel-sample y el
+    scope inventory. Identifiqué el nombre de cada índice, la collection
+    a la que pertenece, su estado, si es primario, sus campos indexados y
+    cualquier condición parcial definida.
+
+    También agrupé los índices por collection para conocer cuántos
+    existían antes de crear los índices de la práctica 4.
+
+    Explica el propósito de docker ps, docker start y curl, qué significa
+    recibir un código HTTP 200, qué es system:indexes, para qué sirven los
+    campos bucket_id, scope_id, keyspace_id, state, is_primary, index_key
+    y condition, y por qué es importante realizar un inventario inicial.
+
+    Explica además cómo interpretar las salidas esperadas, cómo validar
+    que la tarea se completó correctamente y qué errores comunes podrían
+    presentarse.
+
+tarea2:
+  title: "Explicar la Tarea 2 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 2 de la
+    Práctica 4 de Couchbase Server.
+
+    Creé cuatro tipos de índices sobre las collections airline y route
+    del dataset travel-sample: un índice secundario simple sobre country,
+    un índice compuesto sobre country y callsign, un índice parcial sobre
+    name limitado a aerolíneas de United States y un índice de arreglo
+    sobre el campo day dentro del arreglo schedule.
+
+    Utilicé CREATE INDEX IF NOT EXISTS para evitar conflictos con índices
+    existentes y después consulté system:indexes para comprobar que los
+    cuatro índices alcanzaran el estado online.
+
+    Finalmente ejecuté consultas compatibles con cada índice para filtrar
+    aerolíneas por país, ordenar por callsign, consultar un subconjunto
+    definido por una condición parcial y buscar rutas cuyo arreglo
+    schedule contuviera un día específico mediante ANY SATISFIES.
+
+    Explica la diferencia entre un índice secundario simple, compuesto,
+    parcial y de arreglo, cómo influye el orden de los campos en un índice
+    compuesto, cómo funciona la condición WHERE de un índice parcial, qué
+    significa DISTINCT ARRAY y cómo se relaciona con ANY SATISFIES.
+
+    Explica también para qué sirve IF NOT EXISTS, qué significa que un
+    índice esté online, cómo interpretar index_key y condition, cómo
+    validar que cada consulta aprovecha la estructura creada y qué errores
+    comunes podrían presentarse.
+
+tarea3:
+  title: "Explicar la Tarea 3 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 3 de la
+    Práctica 4 de Couchbase Server.
+
+    Creé el índice idx_lab4_airport_city_deferred sobre los campos city y
+    country de la collection airport utilizando WITH {"defer_build": true}.
+
+    Después consulté system:indexes y confirmé que el índice apareciera en
+    estado deferred. Posteriormente ejecuté BUILD INDEX para iniciar su
+    construcción y revisé varias veces su estado hasta que alcanzara
+    online.
+
+    Finalmente ejecuté una consulta sobre city y country para comprobar
+    que el índice construido estuviera disponible para resolver consultas.
+
+    Explica qué significa crear un índice con construcción diferida, la
+    diferencia entre los estados deferred, building y online, para qué
+    sirve BUILD INDEX, por qué el estado building puede no llegar a
+    observarse en datasets pequeños y qué ventajas tiene diferir la
+    construcción de varios índices.
+
+    Explica además cómo interpretar las salidas esperadas, cómo validar
+    que el índice quedó listo, qué sucede si se intenta utilizar mientras
+    permanece deferred y qué errores comunes podrían presentarse.
+
+tarea4:
+  title: "Explicar la Tarea 4 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 4 de la
+    Práctica 4 de Couchbase Server.
+
+    Creé el índice idx_lab4_route_source_partitioned sobre los campos
+    sourceairport y destinationairport de la collection route utilizando
+    PARTITION BY HASH(sourceairport) y ocho particiones lógicas.
+
+    Después consulté system:indexes para revisar el nombre, el estado, la
+    definición de los campos y la propiedad partition. También ejecuté una
+    consulta filtrada por sourceairport y utilicé EXPLAIN para revisar el
+    plan de ejecución y comprobar si el optimizador seleccionaba el índice
+    particionado.
+
+    Finalmente analicé la diferencia entre particionamiento lógico y
+    distribución física, considerando que el laboratorio utiliza un solo
+    nodo del Index Service.
+
+    Explica cómo funciona PARTITION BY HASH, qué representa
+    num_partition, por qué sourceairport se utiliza como clave de
+    particionamiento, cómo interpreta Couchbase las particiones y cómo
+    puede aprovecharlas un clúster con varios nodos del Index Service.
+
+    Explica también qué información proporciona EXPLAIN, por qué el
+    optimizador puede elegir otro índice compatible, qué limitaciones
+    existen en un nodo único, cómo validar correctamente la creación del
+    índice y qué errores comunes podrían presentarse.
+
+tarea5:
+  title: "Explicar la Tarea 5 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 5 de la
+    Práctica 4 de Couchbase Server.
+
+    Exploré en la Web Console los índices creados con el prefijo idx_lab4_
+    e identifiqué su nombre, bucket, scope, collection, estado, definición,
+    condición parcial, nodo y métricas disponibles.
+
+    Después ejecuté varias veces una consulta sobre country y callsign para
+    generar actividad y revisé si las métricas del Index Service reflejaban
+    nuevas solicitudes.
+
+    También consulté mediante curl el endpoint /settings/indexes para
+    revisar la configuración del Index Service y observar el modo de
+    almacenamiento disponible en Community Edition.
+
+    Finalmente comparé conceptualmente las capacidades de Community y
+    Enterprise Edition, incluyendo índices particionados, réplicas,
+    movimiento de índices, Plasma y Memory Optimized Indexes, y ejecuté una
+    validación final desde Git Bash para confirmar que los seis índices de
+    la práctica estuvieran online y que el servicio Query devolviera
+    status success.
+
+    Explica cómo interpretar la sección Indexes de la Web Console, qué
+    métricas pueden aparecer, cómo generar actividad sobre un índice, para
+    qué sirve el endpoint /settings/indexes y qué significa storageMode.
+
+    Explica además las diferencias principales entre Community y
+    Enterprise Edition en relación con índices, por qué las réplicas y el
+    movimiento de índices requieren varios nodos, qué son Plasma y Memory
+    Optimized Indexes, cómo interpretar status success, cómo validar que la
+    práctica se completó correctamente y qué errores comunes podrían
+    presentarse.

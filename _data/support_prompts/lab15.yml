@@ -1,0 +1,382 @@
+# Prompts de apoyo para la Práctica 15
+# El slug del laboratorio debe ser: lab15
+
+tarea1:
+  title: "Explicar la Tarea 1 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 1 de la
+    Práctica 15 de Couchbase Server.
+
+    Preparé el entorno de trabajo para continuar utilizando Couchbase
+    Analytics sobre los recursos creados en la práctica anterior.
+
+    Abrí Docker Desktop y esperé a que el motor terminara de iniciar antes
+    de trabajar con el contenedor.
+
+    Después abrí Visual Studio Code, seleccioné el directorio
+    C:\LABS\couchbase-nosql y abrí una terminal integrada con el perfil
+    Git Bash.
+
+    Desde Git Bash creé el directorio
+    /c/LABS/couchbase-nosql/lab15 y cambié a esa ubicación para guardar
+    todos los archivos SQL++, JSON y Bash generados durante la práctica.
+
+    Definí las variables CB_HOST, CB_ADMIN, CB_PASS, CB_URL,
+    CB_ANALYTICS_URL, CB_ANALYTICS_SERVICE y ANALYTICS_DATAVERSE.
+
+    Utilicé docker inspect para confirmar que el contenedor couchbase-lab
+    utilizara exactamente la imagen
+    couchbase/server:enterprise-7.6.2.
+
+    Después ejecuté docker ps para comprobar que el contenedor estuviera
+    activo y docker port para verificar que el puerto 8095 del servicio
+    Analytics estuviera publicado hacia el host Windows.
+
+    Ejecuté una consulta SELECT VALUE 1 mediante el Analytics REST API,
+    asigné el client_context_id lab15-healthcheck-001 y guardé la respuesta
+    en analytics-healthcheck-response.json.
+
+    Formateé la respuesta mediante python -m json.tool y comprobé que
+    status fuera success y que results contuviera el valor 1.
+
+    Luego abrí la Web Console en http://localhost:8091, inicié sesión con
+    Administrator y Password123!, y seleccioné Analytics en el menú
+    lateral.
+
+    Desde Analytics Workbench consulté Metadata.Dataset para confirmar que
+    airports, hotels y routes existieran dentro de TravelAnalytics.
+
+    Finalmente ejecuté una consulta con tres subconsultas COUNT para
+    comprobar que las Analytics collections continuaran sincronizadas y
+    tuvieran conteos mayores que cero.
+
+    Explica el propósito de crear el directorio lab15 y por qué los
+    comandos de sistema se ejecutaron desde Git Bash.
+
+    Explica la función de cada variable de entorno y la diferencia entre
+    CB_URL, CB_ANALYTICS_URL y CB_ANALYTICS_SERVICE.
+
+    Explica cómo funcionan docker inspect, docker ps y docker port, y por
+    qué es obligatorio validar la imagen
+    couchbase/server:enterprise-7.6.2.
+
+    Explica por qué el puerto 8095 debe estar publicado para acceder a
+    Analytics desde Windows.
+
+    Explica cómo curl utiliza autenticación, POST, --data-urlencode,
+    statement y client_context_id.
+
+    Explica por qué SELECT VALUE 1 permite validar autenticación, endpoint
+    y motor SQL++ en una sola operación.
+
+    Explica qué representa Metadata.Dataset y por qué esta práctica
+    reutiliza airports, routes y hotels en lugar de crear datasets con
+    nombres diferentes.
+
+    Explica cómo interpretar los conteos, cómo validar que la tarea se
+    completó correctamente y qué errores comunes podrían presentarse por
+    un contenedor detenido, un puerto no publicado, credenciales
+    incorrectas o recursos faltantes.
+
+tarea2:
+  title: "Explicar la Tarea 2 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 2 de la
+    Práctica 15 de Couchbase Server.
+
+    Creé tres archivos SQL++ dentro del directorio lab15 y ejecuté cada
+    consulta desde Analytics Workbench.
+
+    Primero creé builtin-string-functions.sqlpp mediante un bloque heredoc
+    de Bash.
+
+    El archivo utilizó UPPER para convertir country a mayúsculas, TRIM para
+    eliminar espacios externos, LENGTH para calcular la longitud del
+    nombre y SPLIT para obtener la primera palabra.
+
+    También utilicé REGEXP_CONTAINS con el patrón
+    hotel|inn|resort|lodge y el flag i para detectar esos términos sin
+    distinguir entre mayúsculas y minúsculas.
+
+    Utilicé COALESCE sobre email y phone para devolver valores de
+    sustitución cuando los fields fueran NULL o MISSING.
+
+    Después confirmé la existencia del archivo mediante ls y revisé su
+    contenido con cat.
+
+    Abrí el archivo desde Visual Studio Code, copié la consulta y la pegué
+    en Analytics Workbench para ejecutarla.
+
+    Luego creé builtin-date-functions.sqlpp con NOW_STR,
+    DATE_DIFF_STR y DATE_ADD_STR.
+
+    Utilicé fechas literales controladas para evitar depender de fechas
+    opcionales o desordenadas dentro del sample bucket.
+
+    Ejecuté la consulta desde Analytics Workbench y revisé el timestamp
+    actual, la diferencia en días y la fecha resultante después de sumar
+    treinta días.
+
+    Finalmente creé builtin-array-functions.sqlpp con ARRAY_DISTINCT,
+    ARRAY_FLATTEN y ARRAY_LENGTH.
+
+    Utilicé arreglos literales para demostrar eliminación de duplicados,
+    reducción de un nivel de anidamiento y conteo de valores distintos.
+
+    Copié el contenido del archivo al editor Analytics y ejecuté la
+    consulta.
+
+    Explica la función de UPPER, TRIM, LENGTH, SPLIT,
+    REGEXP_CONTAINS y COALESCE.
+
+    Explica cómo el tercer argumento i de REGEXP_CONTAINS permite una
+    búsqueda case-insensitive.
+
+    Explica la diferencia entre NULL y MISSING y por qué COALESCE puede
+    utilizarse para cubrir ambos casos.
+
+    Explica cómo funcionan NOW_STR, DATE_DIFF_STR y DATE_ADD_STR.
+
+    Explica por qué se utilizaron fechas controladas en lugar de asumir
+    que las reseñas del sample bucket estaban ordenadas cronológicamente.
+
+    Explica cómo funcionan ARRAY_DISTINCT, ARRAY_FLATTEN y ARRAY_LENGTH.
+
+    Explica por qué los arreglos literales proporcionan una validación más
+    reproducible que fields opcionales como amenities.
+
+    Explica cómo crear archivos mediante cat y heredoc, cómo abrirlos en
+    Visual Studio Code y cómo ejecutar su contenido desde Analytics
+    Workbench.
+
+    Explica cómo interpretar las salidas, cómo validar que la tarea se
+    completó correctamente y qué errores comunes podrían presentarse por
+    nombres de funciones incorrectos, tipos incompatibles, archivos vacíos
+    o consultas pegadas en una interfaz diferente.
+
+tarea3:
+  title: "Explicar la Tarea 3 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 3 de la
+    Práctica 15 de Couchbase Server.
+
+    Primero creé airline-route-totals.sqlpp para generar una métrica base
+    de rutas por aerolínea.
+
+    La consulta agrupó los documentos de routes por airline, calculó
+    COUNT(*) como total_routes y COUNT(DISTINCT sourceairport) como
+    origin_airports.
+
+    Excluí valores MISSING y NULL antes de agrupar.
+
+    Abrí el archivo en Visual Studio Code, copié la consulta, la pegué en
+    Analytics Workbench y confirmé que devolviera métricas numéricas.
+
+    Después creé airline-rankings.sqlpp.
+
+    La consulta utilizó una subconsulta para calcular primero las métricas
+    agregadas y después aplicó ROW_NUMBER, RANK y DENSE_RANK.
+
+    ROW_NUMBER utilizó total_routes en orden descendente y airline en
+    orden ascendente para producir una numeración determinista incluso
+    cuando hubiera empates.
+
+    RANK y DENSE_RANK utilizaron únicamente total_routes para conservar la
+    semántica de empate.
+
+    Ejecuté la consulta y comparé row_number_value, rank_value y
+    dense_rank_value.
+
+    También ejecuté una consulta con tres objetos literales A, B y C para
+    garantizar un empate de score y comprobar que ROW_NUMBER produjera
+    1, 2, 3; RANK produjera 1, 1, 3; y DENSE_RANK produjera 1, 1, 2.
+
+    Después creé airline-route-quartiles.sqlpp.
+
+    Utilicé NTILE(4) para distribuir las aerolíneas en cuatro grupos
+    aproximadamente iguales según total_routes.
+
+    Ejecuté el archivo desde Analytics Workbench y confirmé que
+    route_quartile solo contuviera valores del 1 al 4.
+
+    Explica por qué las window functions se aplicaron sobre una subconsulta
+    agregada y no directamente sobre documentos individuales de routes.
+
+    Explica cómo funcionan GROUP BY, COUNT y COUNT DISTINCT en la métrica
+    base.
+
+    Explica la diferencia entre ROW_NUMBER, RANK y DENSE_RANK.
+
+    Explica por qué ROW_NUMBER necesita un criterio de desempate adicional
+    para ser determinista.
+
+    Explica por qué RANK deja huecos después de un empate y DENSE_RANK no.
+
+    Explica por qué se utilizó un conjunto literal para demostrar empates
+    de forma garantizada.
+
+    Explica cómo funciona NTILE(4), cómo distribuye filas y por qué sus
+    grupos no representan rangos numéricos fijos.
+
+    Explica cómo interpretar los resultados, cómo validar que la tarea se
+    completó correctamente y qué errores comunes podrían presentarse por
+    aliases incorrectos, empates no deterministas, valores ausentes o una
+    subconsulta mal formada.
+
+tarea4:
+  title: "Explicar la Tarea 4 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 4 de la
+    Práctica 15 de Couchbase Server.
+
+    Creé airline-lag-lead.sqlpp para comparar el conteo de rutas de cada
+    aerolínea con las filas anterior y siguiente.
+
+    Utilicé LAG(total_routes, 1, NULL) para obtener el valor anterior y
+    LEAD(total_routes, 1, NULL) para obtener el siguiente.
+
+    Definí un orden determinista por total_routes descendente y airline
+    ascendente.
+
+    Calculé difference_from_previous restando el valor devuelto por LAG al
+    total actual.
+
+    Ejecuté la consulta desde Analytics Workbench y comprobé que la primera
+    fila tuviera previous_total igual a NULL porque no existe una fila
+    anterior.
+
+    Después creé airline-first-last.sqlpp.
+
+    Utilicé FIRST_VALUE y LAST_VALUE sobre total_routes y definí el marco
+    ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING.
+
+    Este marco permitió que ambas funciones observaran toda la ventana y
+    devolvieran el mínimo y el máximo global de rutas.
+
+    Ejecuté la consulta y confirmé que minimum_route_total y
+    maximum_route_total permanecieran constantes en todas las filas.
+
+    Luego creé airline-window-aggregates.sqlpp.
+
+    Utilicé SUM(total_routes) OVER con el marco desde el inicio hasta la
+    fila actual para calcular cumulative_routes.
+
+    Utilicé RATIO_TO_REPORT para calcular el porcentaje de rutas de cada
+    aerolínea respecto al total.
+
+    También utilicé AVG(total_routes) OVER con un marco de dos filas
+    anteriores y dos posteriores para producir moving_average_5.
+
+    Ejecuté la consulta y comprobé que el acumulado no disminuyera, que el
+    porcentaje representara una participación sobre el total y que el
+    promedio móvil cambiara según la posición de la fila.
+
+    Explica cómo funcionan LAG y LEAD y qué representan los argumentos
+    expresión, offset y valor por defecto.
+
+    Explica por qué se utilizó NULL como valor por defecto en lugar de cero.
+
+    Explica que LAG y LEAD comparan posiciones dentro de un orden definido
+    y que no necesariamente representan una serie temporal.
+
+    Explica cómo funcionan FIRST_VALUE y LAST_VALUE.
+
+    Explica por qué LAST_VALUE necesita un marco explícito que llegue hasta
+    UNBOUNDED FOLLOWING.
+
+    Explica el significado de UNBOUNDED PRECEDING, CURRENT ROW y
+    UNBOUNDED FOLLOWING.
+
+    Explica cómo SUM OVER genera un acumulado y por qué el resultado no
+    debe disminuir.
+
+    Explica cómo RATIO_TO_REPORT calcula una proporción respecto al total.
+
+    Explica cómo el marco ROWS BETWEEN 2 PRECEDING AND 2 FOLLOWING genera
+    un promedio móvil de hasta cinco filas.
+
+    Explica cómo interpretar los resultados, cómo validar que la tarea se
+    completó correctamente y qué errores comunes podrían presentarse por
+    órdenes no deterministas, marcos incompletos, aliases incorrectos o
+    valores NULL.
+
+tarea5:
+  title: "Explicar la Tarea 5 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 5 de la
+    Práctica 15 de Couchbase Server.
+
+    Creé explain-airline-ranking.sqlpp mediante Git Bash.
+
+    El archivo utilizó EXPLAIN sobre una consulta que agrupaba rutas por
+    aerolínea y después aplicaba RANK sobre total_routes.
+
+    Abrí el archivo desde Visual Studio Code, copié su contenido, lo pegué
+    en Analytics Workbench y ejecuté la consulta.
+
+    Revisé el JSON del plan e identifiqué conceptualmente las etapas de
+    lectura de routes, filtrado de valores ausentes, agrupación,
+    ordenamiento, cálculo de la window function y entrega del resultado.
+
+    No dependí de nombres rígidos de operadores porque la estructura exacta
+    del plan puede cambiar según la versión y la consulta.
+
+    Después ejecuté una consulta con SELECT * y LIMIT 100 para observar una
+    proyección amplia.
+
+    Ejecuté una segunda consulta que devolvía únicamente airline,
+    sourceairport y destinationairport, además de filtros sobre fields
+    ausentes.
+
+    Comparé resultSize, resultCount, elapsedTime y executionTime desde el
+    panel de resultados.
+
+    No asumí que una consulta tuviera que ser siempre más rápida porque el
+    tamaño del dataset, la caché y la carga del sistema pueden influir en
+    los tiempos.
+
+    Luego creé validate-lab15.sh.
+
+    El script verificó que couchbase-lab utilizara
+    couchbase/server:enterprise-7.6.2, que el puerto 8095 estuviera
+    publicado y que analytics-healthcheck-response.json tuviera status
+    success.
+
+    También consultó Metadata.Dataset mediante REST API para confirmar que
+    TravelAnalytics contuviera airports, routes y hotels.
+
+    El script comprobó la existencia de los archivos SQL++ principales y
+    utilizó funciones pass y fail para contar verificaciones correctas y
+    fallidas.
+
+    Asigné permiso de ejecución mediante chmod +x y ejecuté el script desde
+    el directorio lab15.
+
+    Finalmente conservé todos los archivos para disponer de evidencia y
+    poder repetir las consultas.
+
+    Explica qué hace EXPLAIN y la diferencia entre obtener un plan y
+    ejecutar una consulta normal.
+
+    Explica cómo identificar conceptualmente lectura, filtro, agregación,
+    ordenamiento, ventana y entrega de resultados.
+
+    Explica la diferencia entre una proyección amplia con SELECT * y una
+    proyección reducida.
+
+    Explica qué representan resultSize, resultCount, elapsedTime y
+    executionTime.
+
+    Explica por qué una sola medición no demuestra de forma definitiva que
+    una consulta sea más rápida.
+
+    Explica cómo funciona validate-lab15.sh, incluyendo shebang, set -u,
+    variables, funciones, condiciones, contadores y códigos de salida.
+
+    Explica cómo el script valida imagen, puerto, health check, datasets y
+    archivos.
+
+    Explica cómo interpretar las líneas PASS y FAIL, cómo validar que la
+    tarea se completó correctamente y qué errores comunes podrían
+    presentarse por permisos, variables no definidas, archivos faltantes,
+    respuestas JSON inválidas o recursos Analytics no disponibles.

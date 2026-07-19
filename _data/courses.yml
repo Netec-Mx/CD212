@@ -10,15 +10,87 @@ cd212:
       duration: "25 min"
       desc: "Analiza cuándo usar NoSQL frente a bases relacionales mediante escenarios, JSON y decisiones CAP."
 
-    - id: lab2 
-      title: "NOMBRE_DE_LA_PRACTICA_2" # NOMBRE DE LA PRACTICA
-      url:  "/lab2/lab2/"
-      duration: "## min" # AJUSTAR TIEMPO DE LA PRACTICA
-      desc: "DESCRIPCION_CORTA_DE_LA_PRACTICA" # DESCRIPCION BREVE DE LA PRACTICA 100-120 CARACTERES
+    - id: lab2
+      title: "Instalación y exploración inicial de Couchbase Server"
+      url: "/lab2/lab2/"
+      duration: "50 min"
+      desc: "Instala Couchbase con Docker, configura el clúster, carga travel-sample y valida SQL++, Search y REST API."
 
     - id: lab3
-      title: "NOMBRE_DE_LA_PRACTICA_3" # NOMBRE DE LA PRACTICA
-      url:  "/lab3/lab3/"
-      duration: "## min"
-      desc: "DESCRIPCION_CORTA_DE_LA_PRACTICA" # DESCRIPCION BREVE DE LA PRACTICA 100-120 CARACTERES
+      title: "Consultas básicas y filtrado de documentos con SQL++"
+      url: "/lab3/lab3/"
+      duration: "80 min"
+      desc: "Ejecuta consultas SQL++ con filtros, agregaciones, funciones, UNNEST y JOIN sobre el dataset travel-sample."
+
+    - id: lab4
+      title: "Creación y validación de índices en Couchbase"
+      url: "/lab4/lab4/"
+      duration: "70 min"
+      desc: "Crea índices simples, compuestos, parciales, de arreglos, diferidos y particionados, y valida su estado."
+
+    - id: lab5
+      title: "Análisis de consultas con EXPLAIN y optimización básica"
+      url: "/lab5/lab5/"
+      duration: "80 min"
+      desc: "Analiza planes con EXPLAIN, crea índices optimizados y compara escaneos, cobertura, ordenamientos y JOIN."
+
+    - id: lab6
+      title: "Creación y despliegue de una Function de Eventing"
+      url: "/lab6/lab6/"
+      duration: "60 min"
+      desc: "Crea una Function de Eventing para auditar cambios, validar pedidos y copiar documentos inválidos a cuarentena."
+
+    - id: lab7
+      title: "Diseño de modelo de datos para una aplicación distribuida"
+      url: "/lab7/lab7/"
+      duration: "60 min"
+      desc: "Diseña e implementa un modelo documental con embedding, referencias, keys, índices y patrones de acceso."
+
+    - id: lab8
+      title: "Modelado de documentos JSON y diseño de keys"
+      url: "/lab8/lab8/"
+      duration: "60 min"
+      desc: "Modela variantes, compara estrategias de keys y evalúa embedding, referencing e híbrido en Couchbase."
+
+    - id: lab9
+      title: "Configuración de roles y pruebas de acceso en Couchbase"
+      url: "/lab9/lab9/"
+      duration: " 55 min"
+      desc: "Configura usuarios, grupos y roles RBAC, y valida accesos permitidos y denegados con mínimo privilegio."
+
+    - id: lab10
+      title: "Ejecución de búsquedas básicas con Couchbase Search"
+      url: "/lab10/lab10/"
+      duration: "50 min"
+      desc: "Crea un índice Search y ejecuta búsquedas match, phrase, fuzzy, prefix y compuestas sobre travel-sample."
+
+    - id: lab11
+      title: "Consultas Search compuestas e integración con SQL++"
+      url: "/lab11/lab11/"
+      duration: "70 min"
+      desc: "Implementa consultas Search compuestas, paginación estable e integración con SQL++ usando SEARCH() y scores."
+
+    - id: lab12
+      title: "Creación y configuración avanzada de índices Full Text Search"
+      url: "/lab12/lab12/"
+      duration: "80 min"
+      desc: "Configura mappings Search avanzados, campos anidados, Store Field Data, índices scoped y un alias federado."
+
+    - id: lab13
+      title: "Creación y validación de analyzers personalizados para búsqueda"
+      url: "/lab13/lab13/"
+      duration: "60 min"
+      desc: "Crea analyzers personalizados en español, normaliza texto y valida búsquedas lingüísticas y códigos SKU exactos."
+
+    - id: lab14
+      title: "Ejecución de consultas analíticas con SQL++ Analytics"
+      url: "/lab14/lab14/"
+      duration: "50 min"
+      desc: "Configura Analytics, sincroniza collections con Link Local y ejecuta consultas SQL++ mediante REST API."
+
+    - id: lab15
+      title: "Uso de funciones y window functions en Analytics"
+      url: "/lab15/lab15/"
+      duration: "70 min"
+      desc: "Aplica funciones integradas y window functions en Analytics para crear rankings, acumulados y analizar planes SQL++."
 

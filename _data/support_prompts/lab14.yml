@@ -1,0 +1,342 @@
+# Prompts de apoyo para la Práctica 14
+# El slug del laboratorio debe ser: lab14
+
+tarea1:
+  title: "Explicar la Tarea 1 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 1 de la
+    Práctica 14 de Couchbase Server.
+
+    Preparé el subdirectorio lab14 dentro del directorio raíz del curso y
+    confirmé que la terminal integrada de Visual Studio Code utilizara
+    Git Bash.
+
+    Después definí variables de entorno para centralizar las credenciales,
+    las URLs de Web Console, Query Service y Analytics Service, así como
+    el nombre del Dataverse TravelAnalytics.
+
+    Configuré CB_URL para el puerto 8091, CB_QUERY_URL para el puerto 8093,
+    CB_ANALYTICS_URL para el puerto 8095 y CB_ANALYTICS_SERVICE para el
+    endpoint /analytics/service.
+
+    Verifiqué mediante docker inspect que el contenedor couchbase-lab
+    utilizara exactamente la imagen
+    couchbase/server:enterprise-7.6.2.
+
+    También comprobé mediante docker ps que el contenedor estuviera activo
+    y, si era necesario, lo inicié mediante docker start.
+
+    Después utilicé docker port para revisar los puertos publicados por el
+    contenedor y confirmé que el puerto 8095 de Analytics estuviera
+    accesible desde localhost.
+
+    Consulté el endpoint /pools/default/nodeServices para confirmar que el
+    nodo reportara los componentes relacionados con Analytics, como cbas,
+    cbasAdmin, cbasCc o el puerto 8095.
+
+    Luego ejecuté una consulta mínima SELECT VALUE 1 mediante el Analytics
+    REST API y guardé la respuesta en
+    analytics-healthcheck-response.json.
+
+    Formateé la respuesta mediante python -m json.tool y comprobé que
+    status fuera success y que results contuviera el valor 1.
+
+    Finalmente abrí la Web Console y confirmé que la opción Analytics
+    apareciera en el menú lateral.
+
+    Explica el propósito de cada variable de entorno y la diferencia entre
+    CB_URL, CB_QUERY_URL, CB_ANALYTICS_URL y CB_ANALYTICS_SERVICE.
+
+    Explica cómo funcionan docker inspect, docker ps, docker start y
+    docker port.
+
+    Explica por qué es obligatorio utilizar la imagen
+    couchbase/server:enterprise-7.6.2 y por qué el puerto 8095 debe estar
+    publicado por Docker.
+
+    Explica qué representan los componentes cbas, cbasAdmin y cbasCc dentro
+    del servicio Analytics.
+
+    Explica cómo funciona curl con autenticación básica, POST,
+    --data-urlencode, statement y client_context_id.
+
+    Explica por qué SELECT VALUE 1 es una validación más completa que
+    comprobar únicamente que el puerto responda.
+
+    Explica cómo interpretar status, results y clientContextID, cómo
+    validar que la tarea se completó correctamente y qué errores comunes
+    podrían presentarse.
+
+tarea2:
+  title: "Explicar la Tarea 2 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 2 de la
+    Práctica 14 de Couchbase Server.
+
+    Creé el archivo create-analytics-environment.sqlpp para conservar las
+    sentencias necesarias para configurar el entorno Analytics.
+
+    Después abrí la sección Analytics de la Web Console y creé el
+    Dataverse TravelAnalytics mediante CREATE DATAVERSE IF NOT EXISTS.
+
+    Utilicé USE TravelAnalytics para establecer ese namespace como contexto
+    activo de las siguientes sentencias.
+
+    Dentro de TravelAnalytics creé las Analytics collections airports,
+    routes y hotels a partir de las collections operacionales
+    travel-sample.inventory.airport,
+    travel-sample.inventory.route y
+    travel-sample.inventory.hotel.
+
+    La sintaxis utilizó CREATE DATASET porque Dataset es el término
+    histórico que todavía aparece en SQL++ Analytics y en los metadatos,
+    aunque conceptualmente también se denomina Analytics collection.
+
+    Después ejecuté CONNECT LINK Local para iniciar la ingestión y la
+    sincronización continua de los datos mediante DCP.
+
+    Consulté Metadata.Dataset para confirmar que airports, routes y hotels
+    estuvieran registrados dentro de TravelAnalytics.
+
+    Finalmente ejecuté una consulta con tres subconsultas COUNT para
+    comprobar que las Analytics collections contuvieran datos.
+
+    Si algún conteo era cero, esperé unos segundos y repetí únicamente la
+    validación porque la carga inicial mediante DCP es asíncrona.
+
+    Explica qué es un Dataverse y por qué también puede entenderse como un
+    Analytics scope o namespace.
+
+    Explica qué es una Analytics collection y por qué la sintaxis utiliza
+    CREATE DATASET.
+
+    Explica la diferencia entre una collection operacional y una Analytics
+    collection.
+
+    Explica qué función cumple USE TravelAnalytics y por qué las sentencias
+    posteriores dependen del contexto activo.
+
+    Explica qué es el Link Local, por qué debe conectarse explícitamente y
+    qué ocurre si los datasets se crean pero el link no está conectado.
+
+    Explica cómo DCP mantiene sincronizadas las copias analíticas sin
+    requerir un proceso ETL manual.
+
+    Explica que, aunque Analytics separe el procesamiento y el
+    almacenamiento a nivel de servicio, en este laboratorio de nodo único
+    continúa compartiendo CPU, RAM, disco y contenedor con los demás
+    servicios.
+
+    Explica cómo interpretar Metadata.Dataset y los conteos, cómo validar
+    que la tarea se completó correctamente y qué errores comunes podrían
+    presentarse si el Dataverse, los datasets o el Link Local ya existían.
+
+tarea3:
+  title: "Explicar la Tarea 3 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 3 de la
+    Práctica 14 de Couchbase Server.
+
+    Creé analytics-airports-by-country.sqlpp con una consulta que agrupaba
+    aeropuertos por country, calculaba COUNT(*) y ordenaba los resultados
+    de mayor a menor.
+
+    Utilicé IS NOT MISSING e IS NOT NULL para excluir documentos sin un
+    valor utilizable en country.
+
+    Ejecuté la consulta desde la Web Console Analytics y revisé las
+    métricas elapsedTime, executionTime, resultCount y processedObjects.
+
+    Después creé analytics-hotel-ratings.sqlpp con una consulta que
+    utilizaba UNNEST sobre h.reviews.
+
+    Mediante UNNEST convertí cada elemento del array reviews en una fila
+    lógica para poder calcular AVG sobre r.ratings.Overall.
+
+    Utilicé COUNT(DISTINCT META(h).id) para contar hoteles sin duplicarlos
+    por cada review expandida.
+
+    También filtré city y ratings.Overall mediante IS NOT MISSING e
+    IS NOT NULL.
+
+    Luego creé analytics-routes-airports-join.sqlpp con un JOIN entre
+    airports y routes.
+
+    Relacioné a.faa con r.sourceairport, filtré aeropuertos de United
+    States, agrupé por aeropuerto y calculé la cantidad de rutas salientes.
+
+    Ejecuté las tres consultas y documenté sus resultados y métricas en
+    analytics-results.md.
+
+    Explica cómo funcionan COUNT, GROUP BY, ORDER BY y LIMIT dentro de
+    Analytics SQL++.
+
+    Explica la diferencia entre NULL y MISSING en documentos JSON y por
+    qué se validaron ambos casos.
+
+    Explica qué hace UNNEST, cómo transforma un array y por qué es necesario
+    para calcular un promedio sobre todas las reviews.
+
+    Explica por qué AVG(h.reviews[0].ratings.Overall) habría utilizado solo
+    la primera review y no el conjunto completo.
+
+    Explica por qué COUNT(DISTINCT META(h).id) evita contar el mismo hotel
+    varias veces después de UNNEST.
+
+    Explica cómo funciona el JOIN entre routes y airports y por qué
+    a.faa = r.sourceairport representa la relación lógica entre ambas
+    Analytics collections.
+
+    Explica qué significan elapsedTime, executionTime, resultCount y
+    processedObjects.
+
+    Explica por qué processedObjects no debe interpretarse automáticamente
+    como prueba de un escaneo completo.
+
+    Explica cómo validar cada consulta, cómo revisar los resultados y qué
+    errores comunes podrían presentarse por fields ausentes, tipos
+    incompatibles o datasets todavía vacíos.
+
+tarea4:
+  title: "Explicar la Tarea 4 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 4 de la
+    Práctica 14 de Couchbase Server.
+
+    Creé rest-success-query.sqlpp con una consulta analítica que agrupaba
+    aeropuertos por país y devolvía los cinco países con mayor cantidad de
+    aeropuertos.
+
+    Envié el archivo al Analytics REST API mediante curl y
+    --data-urlencode, evitando construir manualmente un documento JSON con
+    saltos de línea y comillas.
+
+    Asigné el client_context_id lab14-rest-success-001 y guardé la
+    respuesta en analytics-success-response.json.
+
+    Después formateé el archivo mediante python -m json.tool y localicé
+    requestID, clientContextID, results, status y metrics.
+
+    Utilicé un script de Python para leer la respuesta y mostrar status,
+    clientContextID, resultCount, elapsedTime, executionTime,
+    processedObjects y errors.
+
+    Después creé rest-error-query.sqlpp con una referencia intencional a
+    dataset_inexistente.
+
+    Ejecuté la consulta inválida mediante el mismo endpoint, asigné el
+    client_context_id lab14-rest-error-001 y guardé la respuesta en
+    analytics-error-response.json.
+
+    Formateé la respuesta y confirmé que status fuera distinto de success,
+    que errors contuviera al menos un elemento y que el primer error
+    incluyera code y msg.
+
+    No utilicé un código de error fijo porque su valor puede variar según
+    la versión y el contexto de la consulta.
+
+    Explica cómo funciona el endpoint /analytics/service y qué diferencia
+    existe entre ejecutar SQL++ desde la Web Console y mediante REST API.
+
+    Explica por qué --data-urlencode es apropiado para enviar archivos
+    SQL++ con espacios, saltos de línea, backticks y comillas.
+
+    Explica qué función cumple client_context_id y cómo ayuda a
+    correlacionar una solicitud con respuestas, registros o consultas
+    completadas.
+
+    Explica los campos requestID, clientContextID, signature, results,
+    status, metrics, errors y warnings.
+
+    Explica que errors puede estar ausente o vacío cuando una consulta es
+    exitosa.
+
+    Explica la diferencia entre elapsedTime y executionTime.
+
+    Explica por qué una consulta con error también puede devolver metrics.
+
+    Explica cómo validar una respuesta exitosa y una fallida, cómo
+    identificar un problema de sintaxis o un dataset inexistente y qué
+    errores comunes podrían presentarse por credenciales, endpoint,
+    archivos o variables incorrectas.
+
+tarea5:
+  title: "Explicar la Tarea 5 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 5 de la
+    Práctica 14 de Couchbase Server.
+
+    Creé run-analytics-report.sh para automatizar la ejecución de
+    rest-success-query.sqlpp mediante el Analytics REST API.
+
+    El script utilizó las variables CB_ADMIN, CB_PASS y
+    CB_ANALYTICS_SERVICE definidas previamente.
+
+    Guardó la respuesta en analytics-report-response.json y utilizó Python
+    para leer el archivo.
+
+    El script comprobó que status fuera success antes de procesar results.
+
+    Cuando la consulta era correcta, mostró elapsedTime, executionTime y
+    una lista de países con sus conteos.
+
+    Si la consulta fallaba, imprimía el contenido de errors y terminaba con
+    un código de salida distinto de cero.
+
+    Después creé validate-lab14.sh para validar la imagen del contenedor, la
+    publicación del puerto 8095, el health check, los metadatos de
+    TravelAnalytics, los conteos de airports, routes y hotels, la respuesta
+    REST exitosa y la respuesta con error.
+
+    El script utilizó funciones pass y fail para contar verificaciones
+    correctas y fallidas.
+
+    Validó que la imagen fuera
+    couchbase/server:enterprise-7.6.2 mediante docker inspect.
+
+    Comprobó el puerto 8095 mediante docker port y grep.
+
+    Leyó analytics-healthcheck-response.json para confirmar que el servicio
+    Analytics hubiera ejecutado una consulta correctamente.
+
+    Consultó Metadata.Dataset mediante REST API y comprobó que existieran
+    al menos tres Analytics collections dentro de TravelAnalytics.
+
+    Ejecutó conteos sobre airports, routes y hotels y verificó que todos
+    fueran mayores que cero.
+
+    También revisó analytics-success-response.json y
+    analytics-error-response.json para comprobar los dos escenarios REST.
+
+    Asigné permisos de ejecución a ambos scripts mediante chmod +x y los
+    ejecuté desde el subdirectorio lab14.
+
+    Finalmente conservé TravelAnalytics, las Analytics collections y los
+    archivos generados para disponer de evidencia y reutilizar el entorno.
+
+    Explica cómo funciona un script Bash con shebang, set -u, variables,
+    funciones, condiciones y códigos de salida.
+
+    Explica por qué set -u ayuda a detectar variables no definidas.
+
+    Explica cómo curl guarda una respuesta en un archivo y cómo Python
+    utiliza json.load para procesarla.
+
+    Explica por qué el script valida status antes de recorrer results.
+
+    Explica cómo funcionan las funciones pass y fail y cómo se acumulan los
+    contadores PASS y FAIL.
+
+    Explica cómo validate-lab14.sh comprueba imagen, puerto, servicio,
+    metadatos, conteos y respuestas REST.
+
+    Explica cómo interpretar el resumen final de verificaciones correctas y
+    fallidas.
+
+    Explica por qué se conservaron los recursos y qué consumo continúan
+    teniendo las Analytics collections mientras permanecen sincronizadas.
+
+    Explica cómo validar manualmente cada comprobación si el script falla y
+    qué errores comunes podrían presentarse por permisos, variables no
+    definidas, respuestas JSON incompletas, puerto no publicado o Link
+    Local desconectado.

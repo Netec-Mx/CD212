@@ -1,0 +1,119 @@
+tarea1:
+  title: "Explicar la Tarea 1 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 1 de la Práctica 2 de
+    Couchbase Server.
+
+    Trabajé desde Visual Studio Code utilizando Git Bash como terminal
+    integrada. Confirmé que Docker Desktop estuviera en ejecución,
+    validé la instalación y el funcionamiento del motor de Docker,
+    descargué y ejecuté la imagen couchbase/server:community-7.6.2
+    dentro de un contenedor llamado couchbase-lab y publiqué los puertos
+    necesarios para los servicios de Couchbase.
+
+    Después comprobé que el contenedor estuviera activo, validé mediante
+    curl que la Web Console respondiera con HTTP 200 y accedí desde el
+    navegador a http://localhost:8091.
+
+    Explica el propósito de cada comando utilizado, qué representa el
+    identificador del contenedor, para qué sirven los puertos publicados,
+    cómo interpretar docker ps y el código HTTP 200, cómo validar que la
+    tarea se completó correctamente y qué errores comunes podrían
+    presentarse.
+
+tarea2:
+  title: "Explicar la Tarea 2 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 2 de la Práctica 2 de
+    Couchbase Server.
+
+    Configuré desde la Web Console un clúster local de nodo único llamado
+    lab-cluster. Definí el usuario Administrator y una contraseña de
+    laboratorio, habilité los servicios Data, Index, Query, Search y
+    Eventing, deshabilité Analytics y asigné memoria a cada servicio.
+
+    Después validé la configuración del clúster mediante la REST API de
+    Couchbase desde Git Bash y cargué el bucket de ejemplo travel-sample.
+    Finalmente comprobé que el bucket estuviera disponible y que su
+    itemCount fuera mayor a 30000 documentos.
+
+    Explica para qué sirve cada servicio habilitado, por qué Analytics se
+    dejó desactivado, qué representa la memoria asignada, qué función
+    cumple travel-sample, cómo interpretar clusterName, memoryQuota e
+    itemCount, cómo validar que la tarea se completó correctamente y qué
+    errores comunes podrían presentarse.
+
+tarea3:
+  title: "Explicar la Tarea 3 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 3 de la Práctica 2 de
+    Couchbase Server.
+
+    Exploré el bucket travel-sample desde la Web Console, identifiqué el
+    scope inventory y revisé las collections airline, airport, hotel,
+    landmark y route.
+
+    Abrí documentos JSON de las collections airline y hotel para comparar
+    una estructura simple con una estructura que contiene objetos anidados
+    y arreglos. Después recuperé el documento airline_10 desde Git Bash
+    usando una consulta SQL++ enviada al servicio Query mediante curl y
+    utilizando META().id para filtrar por el identificador interno del
+    documento.
+
+    Explica los conceptos bucket, scope, collection y documento JSON, la
+    diferencia entre un documento plano y uno anidado, para qué sirve
+    META().id, por qué se usó SQL++ en lugar de un endpoint directo al
+    documento, cómo interpretar document_id, name, iata, country y status,
+    cómo validar que la tarea se completó correctamente y qué errores
+    comunes podrían presentarse.
+
+tarea4:
+  title: "Explicar la Tarea 4 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 4 de la Práctica 2 de
+    Couchbase Server.
+
+    Abrí el Query Editor de Couchbase y creé índices primarios y
+    secundarios mínimos sobre las collections airline y hotel del bucket
+    travel-sample.
+
+    Utilicé CREATE PRIMARY INDEX IF NOT EXISTS para permitir consultas
+    generales y CREATE INDEX IF NOT EXISTS sobre el campo country para
+    mejorar las búsquedas por país. Después ejecuté consultas SQL++ con
+    SELECT, WHERE, ORDER BY, LIMIT, COUNT y GROUP BY.
+
+    También consulté campos anidados como geo.lat y geo.lon en documentos
+    de hotel y ejecuté una consulta SQL++ desde Git Bash mediante curl
+    contra el endpoint http://localhost:8093/query/service.
+
+    Explica la diferencia entre un índice primario y uno secundario, para
+    qué sirve IF NOT EXISTS, cómo trabaja el servicio Query, qué hacen
+    SELECT, WHERE, ORDER BY, LIMIT, COUNT y GROUP BY, cómo se accede a
+    campos JSON anidados, cómo interpretar status success, cómo validar
+    que la tarea se completó correctamente y qué errores comunes podrían
+    presentarse.
+
+tarea5:
+  title: "Explicar la Tarea 5 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 5 de la Práctica 2 de
+    Couchbase Server.
+
+    Validé desde la terminal integrada de Visual Studio Code con Git Bash
+    los servicios principales del entorno Couchbase mediante curl.
+
+    Comprobé el acceso a la Web Console en el puerto 8091, la autenticación
+    contra la REST API del clúster, el funcionamiento del servicio Query
+    en el puerto 8093, el acceso al servicio Search en el puerto 8094 y la
+    disponibilidad del bucket travel-sample.
+
+    Después ejecuté un bloque Bash de verificación final que utilizó
+    variables, condiciones if y códigos HTTP para mostrar mensajes de
+    éxito o error según el estado de cada componente.
+
+    Explica qué valida cada endpoint, qué representan los códigos HTTP
+    200, qué significa status success, qué indican bucketType e itemCount,
+    cómo funcionan las variables y condiciones if del script Bash, cómo
+    interpretar cada mensaje de validación, cómo confirmar que el entorno
+    quedó listo para la siguiente práctica y qué errores comunes podrían
+    presentarse.

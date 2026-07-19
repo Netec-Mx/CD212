@@ -1,0 +1,234 @@
+# Prompts de apoyo para la Práctica 9
+# El slug del laboratorio debe ser: lab9
+
+tarea1:
+  title: "Explicar la Tarea 1 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 1 de la
+    Práctica 9 de Couchbase Server.
+
+    Preparé el subdirectorio lab9 dentro del directorio raíz del curso,
+    validé que el contenedor couchbase-lab estuviera activo y confirmé
+    que la Web Console respondiera correctamente.
+
+    Después definí variables de entorno para centralizar las credenciales
+    del administrador, la URL de Couchbase, la URL del servicio Query y
+    las credenciales educativas de los usuarios app-readonly,
+    app-backend y reporter-user.
+
+    Verifiqué que el bucket ecommerce creado en prácticas anteriores
+    existiera y lo reutilicé sin modificar el scope store.
+
+    Luego creé los scopes catalog y sales para utilizarlos como límites
+    de autorización. Dentro de catalog creé las collections products y
+    categories, y dentro de sales creé customers y purchases.
+
+    También creé índices primarios y secundarios con el prefijo
+    idx_lab9_, inserté datos de prueba mediante UPSERT y validé los
+    conteos de productos, categorías, clientes y compras.
+
+    Explica el propósito de docker ps, docker start, curl y las variables
+    de entorno, así como la diferencia entre CB_URL y CB_QUERY_URL.
+
+    Explica por qué se reutilizó ecommerce, qué función cumplen los scopes
+    catalog y sales como límites de seguridad y por qué no se modificó el
+    scope store de las prácticas anteriores.
+
+    Explica además para qué sirven CREATE SCOPE, CREATE COLLECTION,
+    IF NOT EXISTS, UPSERT, los índices primarios y los índices
+    secundarios.
+
+    Explica cómo interpretar las salidas esperadas, cómo comprobar que
+    los índices estén online, cómo validar que la tarea se completó
+    correctamente y qué errores comunes podrían presentarse.
+
+tarea2:
+  title: "Explicar la Tarea 2 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 2 de la
+    Práctica 9 de Couchbase Server.
+
+    Creé el usuario local app-readonly mediante la REST API de RBAC y le
+    asigné los roles data_reader[ecommerce:catalog] y
+    query_select[ecommerce:catalog].
+
+    Después consulté la configuración del usuario como administrador para
+    verificar que los roles estuvieran asociados únicamente al scope
+    catalog.
+
+    Probé una consulta SELECT permitida sobre
+    ecommerce.catalog.products mediante la Query REST API y confirmé que
+    el usuario podía consultar productos con precio menor a 100.
+
+    Luego intenté realizar un UPSERT en catalog.products y confirmé que la
+    operación era denegada porque el usuario no tenía query_insert ni
+    permisos de escritura.
+
+    También intenté consultar ecommerce.sales.purchases y confirmé que la
+    operación era denegada porque los permisos del usuario no incluían el
+    scope sales.
+
+    Finalmente registré los resultados permitidos y denegados en el
+    archivo rbac-test-matrix.md.
+
+    Explica la diferencia entre autenticación y autorización, qué es un
+    usuario local de Couchbase y cómo funciona el endpoint
+    /settings/rbac/users/local.
+
+    Explica la diferencia entre data_reader y query_select, por qué ambos
+    roles pueden ser necesarios y qué significa el alcance
+    ecommerce:catalog.
+
+    Explica cómo funciona la Query REST API, para qué sirve
+    --data-urlencode y cómo interpretar una respuesta status success
+    frente a una respuesta con errors.
+
+    Explica por qué el SELECT fue permitido, por qué el UPSERT fue
+    denegado y por qué el usuario no pudo consultar sales.
+
+    Explica cómo validar que el principio de mínimo privilegio se aplicó
+    correctamente y qué errores comunes podrían presentarse.
+
+tarea3:
+  title: "Explicar la Tarea 3 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 3 de la
+    Práctica 9 de Couchbase Server.
+
+    Creé el usuario app-backend mediante la REST API y le asigné permisos
+    específicos a nivel de collection.
+
+    El usuario recibió lectura sobre ecommerce.catalog.products,
+    lectura sobre ecommerce.sales.customers y permisos de lectura,
+    escritura, inserción y actualización sobre
+    ecommerce.sales.purchases.
+
+    Después verifiqué los roles configurados y confirmé que los alcances
+    incluían bucket, scope y collection.
+
+    Probé que app-backend podía consultar productos y clientes.
+
+    Luego ejecuté un UPSERT para crear la compra ord::RBAC-003 y confirmé
+    que la mutación se completó correctamente.
+
+    Después actualicé el estado de la compra mediante UPDATE con USE KEYS
+    y confirmé que el nuevo estado era confirmed.
+
+    Finalmente intenté insertar un producto y eliminar una compra. Ambas
+    operaciones fueron denegadas porque el usuario no tenía permisos de
+    escritura sobre products ni el rol query_delete sobre purchases.
+
+    Explica qué significa asignar roles a nivel de collection y cómo se
+    interpreta una expresión como
+    query_update[ecommerce:sales:purchases].
+
+    Explica la diferencia entre data_writer, query_insert,
+    query_update y query_delete, y por qué conceder uno no implica
+    automáticamente conceder los demás.
+
+    Explica cómo funciona USE KEYS dentro de UPDATE, por qué representa
+    una actualización dirigida a un documento conocido y cómo interpretar
+    mutationCount.
+
+    Explica por qué app-backend puede modificar purchases pero no
+    products, por qué DELETE falla y cómo esta configuración representa
+    separación de responsabilidades.
+
+    Explica cómo validar los accesos permitidos y denegados, cómo revisar
+    roles asignados accidentalmente y qué errores comunes podrían
+    presentarse.
+
+tarea4:
+  title: "Explicar la Tarea 4 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 4 de la
+    Práctica 9 de Couchbase Server.
+
+    Creé el grupo reporting-team mediante la REST API de RBAC y le
+    asigné los roles data_reader[ecommerce:catalog] y
+    query_select[ecommerce:catalog].
+
+    Después verifiqué que el grupo existiera y que sus permisos estuvieran
+    limitados al scope catalog.
+
+    Luego creé el usuario reporter-user sin asignarle roles directos y lo
+    asocié al grupo reporting-team mediante el parámetro groups.
+
+    Consulté la configuración del usuario y confirmé que perteneciera al
+    grupo.
+
+    Probé una consulta permitida sobre ecommerce.catalog.categories y
+    confirmé que reporter-user podía ejecutarla gracias a los permisos
+    heredados.
+
+    Después intenté consultar ecommerce.sales.customers y confirmé que la
+    operación era denegada porque el grupo no tenía acceso al scope sales.
+
+    Finalmente documenté la diferencia entre roles directos y roles
+    heredados en rbac-test-matrix.md.
+
+    Explica qué es un grupo de usuarios en Couchbase, por qué permite
+    centralizar permisos y qué ventajas ofrece frente a asignar los
+    mismos roles individualmente a muchos usuarios.
+
+    Explica cómo funciona la herencia de roles, qué significa que
+    reporter-user no tenga roles directos y cómo se determina su acceso
+    efectivo.
+
+    Explica por qué el acceso al catálogo fue permitido, por qué el acceso
+    a sales fue denegado y cómo comprobar operativamente la herencia de
+    permisos aunque la respuesta REST pueda variar según la versión.
+
+    Explica cómo validar la pertenencia al grupo, cómo detectar una
+    asignación incorrecta y qué errores comunes podrían presentarse.
+
+tarea5:
+  title: "Explicar la Tarea 5 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 5 de la
+    Práctica 9 de Couchbase Server.
+
+    Inspeccioné desde la Web Console los usuarios app-readonly,
+    app-backend y reporter-user, así como el grupo reporting-team, para
+    verificar visualmente sus roles y pertenencia a grupos.
+
+    Después creé el script validate_rbac.sh en Visual Studio Code.
+
+    El script define una función test_query que recibe usuario,
+    contraseña, sentencia SQL++, resultado esperado y descripción de la
+    prueba.
+
+    La función ejecuta cada consulta mediante curl contra la Query REST
+    API, analiza si la respuesta contiene status success y compara el
+    resultado real con el resultado esperado.
+
+    El script valida que app-readonly pueda consultar productos pero no
+    compras, que app-backend pueda consultar productos y actualizar
+    compras pero no eliminarlas, y que reporter-user herede lectura del
+    catálogo pero no pueda consultar clientes.
+
+    Después otorgué permisos de ejecución al archivo mediante chmod +x,
+    ejecuté el script y confirmé que todas las pruebas mostraran PASS.
+
+    Finalmente consulté la lista de usuarios y grupos como administrador
+    y documenté una conclusión sobre la aplicación del principio de
+    mínimo privilegio.
+
+    Explica cómo funciona la función test_query, para qué sirven los
+    parámetros locales y cómo se ejecuta una sentencia SQL++ mediante
+    curl.
+
+    Explica el propósito de grep -Eq, cómo el script determina success o
+    error y por qué es importante comparar el resultado real con el
+    esperado.
+
+    Explica para qué sirve chmod +x, cómo interpretar PASS y FAIL y qué
+    información debe revisarse cuando una prueba falla.
+
+    Explica además por qué una prueba negativa exitosa aparece como PASS,
+    cómo el script convierte la matriz RBAC en una validación repetible y
+    cómo confirmar que ningún usuario de aplicación tenga permisos
+    administrativos innecesarios.
+
+    Explica cómo validar que la práctica se completó correctamente y qué
+    errores comunes podrían presentarse.

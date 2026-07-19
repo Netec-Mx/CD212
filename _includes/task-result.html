@@ -25,37 +25,81 @@ Opciones de uso:
 {%- assign _title = include.title | default: "Tarea finalizada" -%}
 
 {%- if include.content and include.content != '' -%}
+
+  {%- assign _safe_content = include.content
+    | strip
+    | replace: "|", "&#124;"
+  -%}
+
   <div class="task-result">
     <h3>{{ _title }}</h3>
-    {{ include.content | strip | markdownify }}
+    {{ _safe_content | markdownify }}
   </div>
+
 {%- elsif page.task_result -%}
+
+  {%- assign _safe_content = page.task_result
+    | strip
+    | replace: "|", "&#124;"
+  -%}
+
   <div class="task-result">
     <h3>{{ _title }}</h3>
-    {{ page.task_result | strip | markdownify }}
+    {{ _safe_content | markdownify }}
   </div>
+
 {%- else -%}
+
   {%- assign _slug = page.slug | default: include.slug -%}
+
   {%- if _slug -%}
-    {%- assign _dataset = site.data.task_results | default: site.data['task-results'] -%}
+
+    {%- assign _dataset = site.data.task_results
+      | default: site.data['task-results']
+    -%}
+
     {%- assign _data = _dataset[_slug] -%}
+
     {%- if _data and _data.results -%}
+
       {%- if include.all -%}
+
         {%- for r in _data.results -%}
+
+          {%- assign _safe_result = r
+            | strip
+            | replace: "|", "&#124;"
+          -%}
+
           <div class="task-result">
             <h3>{{ _title }}</h3>
-            {{ r | strip | markdownify }}
+            {{ _safe_result | markdownify }}
           </div>
+
         {%- endfor -%}
+
       {%- elsif include.index != nil -%}
+
         {%- assign r = _data.results[include.index] -%}
+
         {%- if r and r != '' -%}
+
+          {%- assign _safe_result = r
+            | strip
+            | replace: "|", "&#124;"
+          -%}
+
           <div class="task-result">
             <h3>{{ _title }}</h3>
-            {{ r | strip | markdownify }}
+            {{ _safe_result | markdownify }}
           </div>
+
         {%- endif -%}
+
       {%- endif -%}
+
     {%- endif -%}
+
   {%- endif -%}
+
 {%- endif -%}

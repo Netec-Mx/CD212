@@ -1,0 +1,162 @@
+# Prompts de apoyo para la Práctica 5
+# El slug del laboratorio debe ser: lab5
+
+tarea1:
+  title: "Explicar la Tarea 1 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 1 de la
+    Práctica 5 de Couchbase Server.
+
+    Preparé el subdirectorio lab5 dentro del directorio raíz del curso,
+    verifiqué que el contenedor couchbase-lab estuviera activo y validé
+    que la Web Console respondiera correctamente.
+
+    Después abrí el Query Editor, confirmé que el dataset travel-sample
+    estuviera disponible y habilité las opciones Metrics y Profile:
+    timings para consultar métricas como elapsedTime, executionTime,
+    resultCount y resultSize.
+
+    También ejecuté una consulta con EXPLAIN para identificar operadores
+    como PrimaryScan3, IndexScan3, Fetch, Filter, Order, Aggregate y Limit,
+    y preparé una tabla para registrar los planes y las medianas antes y
+    después de cada optimización.
+
+    Explica el propósito de docker ps, docker start y curl, qué significa
+    recibir un código HTTP 200, para qué sirven Metrics y Profile:
+    timings, la diferencia entre elapsedTime y executionTime, por qué se
+    ejecuta una consulta una vez para calentar caché y después tres veces,
+    y por qué se utiliza la mediana.
+
+    Explica además qué representa cada operador principal de EXPLAIN,
+    cómo interpretar las salidas esperadas, cómo validar que la tarea se
+    completó correctamente y qué errores comunes podrían presentarse.
+
+tarea2:
+  title: "Explicar la Tarea 2 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 2 de la
+    Práctica 5 de Couchbase Server.
+
+    Analicé una consulta sobre la collection hotel que filtraba por
+    avg_rating y free_breakfast. Primero revisé su plan con EXPLAIN para
+    identificar si utilizaba un escaneo amplio, un índice poco selectivo,
+    Fetch o Filter.
+
+    Después creé el índice compuesto
+    idx_lab5_hotel_rating_breakfast sobre avg_rating y free_breakfast,
+    confirmé que estuviera online y comparé nuevamente el plan y las
+    métricas de ejecución.
+
+    También analicé una consulta que aplicaba LOWER(name) dentro de WHERE.
+    Creé el índice funcional idx_lab5_hotel_name_lower sobre LOWER(name)
+    y validé si Couchbase podía usar la expresión indexada directamente.
+
+    Explica la diferencia entre un escaneo amplio y un IndexScan3
+    selectivo, para qué sirve un índice compuesto, cómo influye el orden
+    de sus campos, por qué puede continuar apareciendo Fetch y qué
+    significa que una condición se aplique como Filter residual.
+
+    Explica además por qué una función en WHERE puede impedir el uso de
+    un índice normal, cómo funciona un índice funcional, para qué sirve
+    IF NOT EXISTS, qué significa que un índice esté online, cómo comparar
+    los planes antes y después y qué errores comunes podrían presentarse.
+
+tarea3:
+  title: "Explicar la Tarea 3 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 3 de la
+    Práctica 5 de Couchbase Server.
+
+    Comparé una consulta con SELECT * frente a una consulta con proyección
+    específica sobre los campos name, city y avg_rating.
+
+    Primero ejecuté EXPLAIN sobre SELECT * y confirmé la presencia del
+    operador Fetch, porque Couchbase necesitaba recuperar el documento
+    completo desde el Data Service.
+
+    Después creé el índice cubriente
+    idx_lab5_hotel_country_rating_cover sobre country, avg_rating, name y
+    city. Volví a ejecutar EXPLAIN con una proyección específica y busqué
+    IndexScan3, la propiedad covers y la ausencia de Fetch.
+
+    Finalmente comparé las métricas de ambas consultas utilizando una
+    ejecución de calentamiento y tres ejecuciones para obtener la mediana.
+
+    Explica la diferencia entre SELECT * y una proyección específica, qué
+    es un índice cubriente, qué significa covers en el plan, por qué la
+    ausencia de Fetch indica que la consulta puede resolverse desde el
+    índice y cómo esto reduce el acceso al Data Service.
+
+    Explica también cómo interpretar resultSize, executionTime y las
+    diferencias entre los planes, cómo validar que la tarea se completó
+    correctamente y qué errores comunes podrían presentarse.
+
+tarea4:
+  title: "Explicar la Tarea 4 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 4 de la
+    Práctica 5 de Couchbase Server.
+
+    Analicé una consulta con ORDER BY avg_rating DESC para identificar si
+    Couchbase realizaba un ordenamiento mediante el operador Order.
+
+    Después creé el índice idx_lab5_hotel_country_rating_desc con country,
+    avg_rating DESC y name, y comparé el nuevo plan para revisar si el
+    orden podía resolverse directamente desde el índice.
+
+    También analicé una consulta de agregación con COUNT, AVG, MAX y MIN,
+    creé el índice cubriente idx_lab5_hotel_aggregate_cover sobre country
+    y avg_rating, y comprobé si la agregación podía ejecutarse sin Fetch.
+
+    Finalmente creé dos índices compuestos con distinto orden de campos:
+    idx_lab5_hotel_wrong_order sobre avg_rating y country, e
+    idx_lab5_hotel_correct_order sobre country y avg_rating. Utilicé
+    USE INDEX como herramienta de diagnóstico para comparar sus spans.
+
+    Explica cómo un índice puede satisfacer ORDER BY, por qué debe
+    coincidir el orden ASC o DESC, qué significa que el operador Order
+    desaparezca y por qué puede continuar apareciendo Fetch si faltan
+    campos de la proyección.
+
+    Explica además cómo funciona una agregación cubierta, por qué GROUP BY
+    debe procesarse antes que LIMIT, cómo interpretar los spans, por qué
+    los campos de igualdad suelen colocarse antes que los campos de rango,
+    para qué sirve USE INDEX durante el diagnóstico y qué errores comunes
+    podrían presentarse.
+
+tarea5:
+  title: "Explicar la Tarea 5 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 5 de la
+    Práctica 5 de Couchbase Server.
+
+    Analicé una consulta JOIN ON KEYS entre las collections route y
+    airline. La relación utilizó r.airlineid como document key para
+    recuperar el documento correspondiente de airline.
+
+    Después creé el índice idx_lab5_route_source_distance sobre
+    sourceairport, distance, airlineid y destinationairport para optimizar
+    la rama route del JOIN. Validé su estado y comparé el plan antes y
+    después de la optimización.
+
+    También comparé una búsqueda con LIKE "%Marriott%" frente a
+    LIKE "Marriott%". Creé un índice sobre name para comprobar que un
+    prefijo fijo puede generar un rango selectivo, mientras que un
+    wildcard inicial requiere revisar muchas entradas y se relaciona
+    mejor con Full Text Search.
+
+    Finalmente completé una tabla comparativa con los planes, medianas y
+    evidencias de cada caso, consulté system:indexes y validé desde Git
+    Bash que los índices idx_lab5_ estuvieran online y que el servicio
+    Query devolviera status success.
+
+    Explica cómo funciona JOIN ON KEYS, qué representa airlineid, por qué
+    no se necesita un índice secundario sobre META(a).id, cómo el índice
+    de route reduce el trabajo de la rama izquierda y cómo interpretar el
+    plan del JOIN.
+
+    Explica también la diferencia entre LIKE con prefijo y wildcard
+    inicial, por qué Full Text Search es más apropiado para búsquedas de
+    palabras o subcadenas, cómo interpretar system:indexes y status
+    success, cómo validar que la práctica se completó correctamente y qué
+    errores comunes podrían presentarse.

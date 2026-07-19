@@ -9,5 +9,112 @@ lab1:
 
 lab2:
   results:
-    - "**Resultado esperado:** MODIFICAR AQUI EL TEXTO DE LA DESCRIPCION DEL RESULTADO ESPERADO"
-    - "**Resultado esperado:** MODIFICAR AQUI EL TEXTO DE LA DESCRIPCION DEL RESULTADO ESPERADO"
+    - "**Resultado esperado:** Ejecutaste Couchbase Server Community 7.6.2 en un contenedor Docker desde Git Bash dentro de Visual Studio Code, confirmaste que el contenedor couchbase-lab está activo y validaste el acceso a la Web Console mediante una respuesta HTTP 200 en http://localhost:8091."
+    - "**Resultado esperado:** Configuraste el clúster local lab-cluster con los servicios Data, Index, Query, Search y Eventing, cargaste correctamente el bucket travel-sample y verificaste que contiene más de 30000 documentos."
+    - "**Resultado esperado:** Identificaste la estructura de organización de Couchbase mediante el bucket travel-sample, el scope inventory y sus collections, comparaste documentos JSON simples y anidados, y recuperaste correctamente el documento airline_10 usando SQL++ con META().id."
+    - "**Resultado esperado:** Creaste índices primarios y secundarios mínimos sobre las collections airline y hotel, ejecutaste consultas SQL++ con filtros, ordenamiento, agrupaciones y campos anidados, y confirmaste que el servicio Query respondió con status success."
+    - "**Resultado esperado:** Validaste correctamente la Web Console, la autenticación del clúster, los servicios Query y Search, y la disponibilidad del bucket travel-sample mediante curl y un script Bash de verificación final, dejando el entorno listo para la siguiente práctica."
+
+lab3:
+  results:
+    - "**Resultado esperado:** Validaste que el contenedor couchbase-lab y la Web Console estuvieran disponibles, comprobaste el acceso al dataset travel-sample y ejecutaste consultas SQL++ con SELECT, proyección de campos, LIMIT, OFFSET y ORDER BY para obtener una paginación estable."
+    - "**Resultado esperado:** Aplicaste alias con AS, concatenaste campos con || y CONCAT(), filtraste documentos con WHERE y LIKE, y recuperaste documentos específicos de la collection airline mediante USE KEYS y META().id."
+    - "**Resultado esperado:** Consultaste aeropuertos y aerolíneas usando comparadores, BETWEEN, LIKE y DISTINCT, y calculaste métricas con COUNT, AVG, MIN y MAX, verificando que los resultados cumplieran los filtros, rangos y ordenamientos definidos."
+    - "**Resultado esperado:** Diferenciaste correctamente campos MISSING y NULL, agrupaste aerolíneas por país con GROUP BY, filtraste grupos mediante HAVING y aplicaste funciones de texto y tipo como UPPER, LOWER, LENGTH, SUBSTR, TOSTRING, TONUMBER y TYPE."
+    - "**Resultado esperado:** Descompusiste el arreglo schedule de los documentos route mediante UNNEST, validaste los conteos por día y realizaste un JOIN ON KEYS entre route y airline, confirmando desde Git Bash que el servicio Query devolvió resultados con status success."
+
+lab4:
+  results:
+    - "**Resultado esperado:** Validaste que el contenedor couchbase-lab y la Web Console estuvieran disponibles, consultaste system:indexes e identificaste los índices existentes por collection, estado y definición."
+    - "**Resultado esperado:** Creaste y validaste índices secundarios simples, compuestos, parciales y de arreglo con el prefijo idx_lab4_, confirmando que todos alcanzaran el estado online y que las consultas asociadas devolvieran resultados correctos."
+    - "**Resultado esperado:** Creaste un índice con construcción diferida, comprobaste su estado deferred, ejecutaste BUILD INDEX y verificaste su transición hasta online antes de utilizarlo en una consulta."
+    - "**Resultado esperado:** Creaste un índice particionado por hash sobre la collection route, validaste su definición y estado, revisaste su uso con EXPLAIN y comprendiste la limitación de las particiones en un clúster de nodo único."
+    - "**Resultado esperado:** Exploraste los índices desde la Web Console, generaste actividad sobre ellos, revisaste las métricas disponibles, consultaste la configuración del Index Service y comparaste conceptualmente las capacidades de Community y Enterprise Edition."
+
+lab5:
+  results:
+    - "**Resultado esperado:** Validaste que Couchbase Server, la Web Console y el dataset travel-sample estuvieran disponibles, habilitaste las métricas de consulta y reconociste operadores clave de EXPLAIN como PrimaryScan3, IndexScan3, Fetch, Filter, Order y Aggregate."
+    - "**Resultado esperado:** Comparaste una consulta con escaneo amplio frente a una versión optimizada con índice compuesto, analizaste el efecto de una función en WHERE y validaste el uso de un índice funcional sobre LOWER(name)."
+    - "**Resultado esperado:** Comparaste SELECT * con una proyección específica, creaste un índice cubriente y comprobaste mediante EXPLAIN que la consulta optimizada podía resolverse sin el operador Fetch."
+    - "**Resultado esperado:** Optimizaste consultas con ORDER BY, agregaciones e índices compuestos, verificando el efecto del orden de los campos, la cobertura del índice y la reducción de operadores innecesarios en el plan."
+    - "**Resultado esperado:** Optimizaste la rama route de un JOIN ON KEYS, comparaste búsquedas LIKE con y sin wildcard inicial, consolidaste las evidencias en una tabla comparativa y confirmaste que los índices idx_lab5_ estaban online con status success."
+
+lab6:
+  results:
+    - "**Resultado esperado:** Validaste que Couchbase Server, la Web Console y el servicio Eventing estuvieran disponibles, creaste los buckets app-data y eventing-meta, el scope workshop, las collections orders, audit-log y quarantine, y confirmaste que los índices requeridos estuvieran online."
+    - "**Resultado esperado:** Creaste y configuraste la Function ProcessOrderEvents con la collection orders como fuente, eventing-meta como metadata y bindings de lectura y escritura hacia audit-log y quarantine, dejando la Function guardada en estado Undeployed."
+    - "**Resultado esperado:** Desplegaste la Function desde eventos nuevos, insertaste y actualizaste un pedido válido, verificaste la creación de registros de auditoría en audit-log y confirmaste mediante los logs que cada mutación fue procesada correctamente."
+    - "**Resultado esperado:** Insertaste un pedido con un status inválido, comprobaste que la Function lo identificara, registrara el evento con validStatus igual a false y copiara el documento a quarantine con su motivo, fecha y contenido original."
+    - "**Resultado esperado:** Eliminaste un pedido para activar OnDelete, verificaste el registro de auditoría correspondiente, revisaste las métricas disponibles de Eventing, realizaste el undeploy de ProcessOrderEvents y confirmaste que después del undeploy ya no se procesaran nuevos eventos."
+
+lab7:
+  results:
+    - "**Resultado esperado:** Validaste que Couchbase Server y la Web Console estuvieran disponibles, creaste el archivo ecommerce-data-model.md e identificaste las seis entidades conceptuales, sus relaciones y los cinco patrones de acceso de la aplicación."
+    - "**Resultado esperado:** Transformaste el modelo conceptual en un modelo lógico documental, justificando el uso de embedding para OrderItem, snapshots para datos históricos, referencias de categorías y documentos Review independientes."
+    - "**Resultado esperado:** Definiste el modelo físico con el bucket ecommerce, el scope store, cinco collections, document keys consistentes e índices alineados a cada patrón de acceso."
+    - "**Resultado esperado:** Creaste la estructura física en Couchbase, configuraste los índices con el prefijo idx_lab7_, insertaste nueve documentos de prueba y verificaste los conteos esperados en customers, products, orders, categories y reviews."
+    - "**Resultado esperado:** Validaste los cinco patrones de acceso mediante SQL++, comprobaste el acceso por document key, el índice de array, la actualización de pedidos, el cálculo de reseñas y las referencias entre orders y products con UNNEST y JOIN."
+
+lab8:
+  results:
+    - "**Resultado esperado:** Validaste la continuidad con ecommerce.store, insertaste el producto PROD-500 con seis variantes embebidas y documentaste por qué el embedding es adecuado cuando las variantes tienen tamaño controlado y comparten el ciclo de vida del producto."
+    - "**Resultado esperado:** Consultaste las variantes mediante UNNEST y ANY...SATISFIES, creaste el índice de array idx_lab8_product_variant_sku y confirmaste con EXPLAIN que Couchbase podía utilizarlo para buscar variantes por SKU."
+    - "**Resultado esperado:** Creaste y comparaste documentos con keys UUID puro, tipo::UUID, tipo::external-id y tipo::tenant::ID, evaluando su legibilidad, unicidad, predecibilidad, acceso directo y riesgos de diseño."
+    - "**Resultado esperado:** Implementaste los modelos embedding total, referencing total e híbrido para representar historiales de compras, validando cómo cada estrategia cambia la cantidad de lecturas, el crecimiento de documentos y la independencia de las escrituras."
+    - "**Resultado esperado:** Agregaste nuevas compras a los tres modelos, comparaste acceso por USE KEYS frente a consulta indexada, documentaste la matriz de trade-offs y confirmaste que los índices idx_lab8_ estuvieran online."
+
+lab9:
+  results:
+    - "**Resultado esperado:** Validaste que Couchbase Server estuviera disponible, reutilizaste el bucket ecommerce, creaste los scopes catalog y sales, configuraste cuatro collections, insertaste los datos de prueba y confirmaste que los índices idx_lab9_ estuvieran online."
+    - "**Resultado esperado:** Creaste el usuario app-readonly con permisos directos de lectura sobre ecommerce.catalog y comprobaste que podía ejecutar SELECT en productos, pero no insertar datos ni consultar compras del scope sales."
+    - "**Resultado esperado:** Creaste el usuario app-backend con permisos específicos a nivel de collection y verificaste que podía leer productos y clientes, así como insertar y actualizar compras, pero no eliminar compras ni modificar productos."
+    - "**Resultado esperado:** Creaste el grupo reporting-team, asignaste el usuario reporter-user sin roles directos y comprobaste que heredaba acceso de lectura al catálogo, pero no podía consultar información del scope sales."
+    - "**Resultado esperado:** Inspeccionaste usuarios y grupos desde la Web Console, ejecutaste el script validate_rbac.sh, validaste la matriz de accesos permitidos y denegados y confirmaste la aplicación del principio de mínimo privilegio."
+
+lab10:
+  results:
+    - "**Resultado esperado:** Validaste que Couchbase Server, Query Service y Search Service estuvieran disponibles, confirmaste la existencia de travel-sample.inventory.hotel y documentaste las limitaciones de SQL++ LIKE para búsquedas de texto libre."
+    - "**Resultado esperado:** Creaste el índice scoped idx_lab10_hotel_search sobre travel-sample.inventory.hotel, configuraste un mapping estático con los campos name, description, city y country, y verificaste que el índice contuviera documentos."
+    - "**Resultado esperado:** Ejecutaste consultas match, match_phrase y fuzzy, analizaste total_hits, max_score, fields y fragments, y comprobaste la diferencia entre análisis lingüístico y tolerancia a errores tipográficos."
+    - "**Resultado esperado:** Ejecutaste una búsqueda prefix y una consulta compuesta con boosts, comparaste los scores de los primeros resultados y revisaste el detalle de relevancia mediante explain."
+    - "**Resultado esperado:** Reprodujiste las búsquedas mediante la REST API scoped, comparaste SQL++ LIKE frente a Couchbase Search y documentaste cuándo utilizar cada tecnología según el tipo de consulta."
+
+lab11:
+  results:
+    - "**Resultado esperado:** Validaste que el contenedor couchbase-lab utilizara la imagen couchbase/server:enterprise-7.6.2, confirmaste la disponibilidad de Web Console, Query y Search, y verificaste que idx_lab10_hotel_search estuviera operativo y con documentos indexados."
+    - "**Resultado esperado:** Ejecutaste Query String Queries con términos simples, condiciones obligatorias, exclusiones, operadores OR, búsquedas por campo y wildcards, y documentaste cómo cada expresión modificó el número y la relevancia de los resultados."
+    - "**Resultado esperado:** Comparaste Term Query y Match Query sobre el campo country, construiste consultas conjunction y disjunction, y comprobaste cómo el parámetro min controla la cantidad mínima de condiciones que deben coincidir."
+    - "**Resultado esperado:** Implementaste paginación estable mediante from, size y sort, guardaste las respuestas de dos páginas, verificaste que los documentos no se repitieran y analizaste total_hits, max_score y took."
+    - "**Resultado esperado:** Integraste Couchbase Search con SQL++ mediante SEARCH() y SEARCH_SCORE(), combinaste relevancia con filtros estructurados y agregaciones, y confirmaste el uso correcto de idx_lab10_hotel_search sobre travel-sample.inventory.hotel."
+
+lab12:
+  results:
+    - "**Resultado esperado:** Validaste que el contenedor couchbase-lab utilizara la imagen couchbase/server:enterprise-7.6.2, confirmaste la disponibilidad de los servicios Web Console, Query y Search, y exploraste la estructura real de los documentos hotel, landmark y reviews."
+    - "**Resultado esperado:** Creaste el índice scoped idx_lab12_hotel_advanced con mapping estático, configuraste fields de tipo text, keyword y number, e incorporaste correctamente los campos anidados reviews.content, reviews.author y reviews.ratings.Overall."
+    - "**Resultado esperado:** Comprobaste que los fields configurados con Store aparecieran en la respuesta Search, ejecutaste búsquedas sobre reviews.content y validaste rangos numéricos entre 4 y 5 sobre reviews.ratings.Overall."
+    - "**Resultado esperado:** Creaste idx_lab12_landmark_search, configuraste alias_lab12_travel_search con los índices de hotel y landmark, y ejecutaste una búsqueda federada mediante un único alias Search."
+    - "**Resultado esperado:** Creaste idx_lab12_hotel_dynamic, comparaste su configuración con el mapping estático y documentaste las diferencias de control, mantenimiento y riesgo de indexar fields innecesarios."
+
+lab13:
+  results:
+    - "**Resultado esperado:** Validaste que couchbase-lab utilizara la imagen couchbase/server:enterprise-7.6.2, creaste el scope search_es y la collection hotels, e insertaste documentos controlados con contenido en español, etiquetas HTML, acentos y códigos SKU."
+    - "**Resultado esperado:** Creaste idx_lab13_spanish_standard e idx_lab13_spanish_custom, configuraste mappings estáticos y registraste spanish_hotel_analyzer y sku_analyzer con los componentes adecuados para lenguaje natural y códigos exactos."
+    - "**Resultado esperado:** Utilizaste Analyze Document para comparar el procesamiento estándar y personalizado, y verificaste la eliminación de HTML, la normalización de acentos, la reducción de stop words, el stemming y la conservación del SKU como un solo token."
+    - "**Resultado esperado:** Comparaste búsquedas sobre cafe, habitacion, vista al mar y códigos SKU, y comprobaste cómo los analyzers personalizados modificaron la coincidencia de términos lingüísticos y exactos."
+    - "**Resultado esperado:** Inspeccionaste la definición registrada del índice personalizado, confirmaste los analyzers asignados a cada field y ejecutaste una validación final de documentos, índices y consultas."
+
+lab14:
+  results:
+    - "**Resultado esperado:** Validaste que couchbase-lab utilizara la imagen couchbase/server:enterprise-7.6.2, confirmaste la publicación del puerto 8095 y comprobaste que Analytics ejecutara correctamente una consulta SQL++ mínima."
+    - "**Resultado esperado:** Creaste el Dataverse TravelAnalytics, configuraste las Analytics collections airports, routes y hotels, conectaste el Link Local y verificaste que los datos comenzaran a sincronizarse mediante DCP."
+    - "**Resultado esperado:** Ejecutaste consultas analíticas con GROUP BY, COUNT, AVG, UNNEST y JOIN, y analizaste las métricas de ejecución sin confundir los objetos procesados con un escaneo completo garantizado."
+    - "**Resultado esperado:** Utilizaste el Analytics REST API para ejecutar una consulta exitosa y otra con error intencional, e interpretaste los campos results, status, metrics, errors, requestID y clientContextID."
+    - "**Resultado esperado:** Automatizaste una consulta mediante run-analytics-report.sh y ejecutaste validate-lab14.sh para comprobar la imagen, el puerto 8095, los datasets, la sincronización y las respuestas REST."
+
+lab15:
+  results:
+    - "**Resultado esperado:** Preparaste el directorio lab15, definiste las variables de conexión, validaste la imagen couchbase/server:enterprise-7.6.2, confirmaste el puerto 8095 y comprobaste que TravelAnalytics conservara airports, routes y hotels con datos sincronizados."
+    - "**Resultado esperado:** Creaste y ejecutaste consultas SQL++ con UPPER, LENGTH, TRIM, SPLIT, REGEXP_CONTAINS, COALESCE, NOW_STR, DATE_DIFF_STR, DATE_ADD_STR, ARRAY_DISTINCT, ARRAY_FLATTEN y ARRAY_LENGTH, interpretando correctamente sus resultados."
+    - "**Resultado esperado:** Generaste métricas de rutas por aerolínea y aplicaste ROW_NUMBER, RANK, DENSE_RANK y NTILE, comprobando el tratamiento de empates, la numeración determinista y la segmentación en cuatro grupos."
+    - "**Resultado esperado:** Utilizaste LAG y LEAD para comparar filas, FIRST_VALUE y LAST_VALUE para identificar extremos, y funciones de agregación con ventana para calcular acumulados, porcentajes y promedios móviles."
+    - "**Resultado esperado:** Ejecutaste EXPLAIN sobre una consulta con ranking, identificaste conceptualmente las etapas del plan y utilizaste validate-lab15.sh para comprobar la imagen, Analytics, las collections y los archivos generados."

@@ -32,29 +32,6 @@ next: /lab2/lab2/
 <!-- Aquí comienzan las instrucciones paso a paso de la práctica -->
 ---
 
-## Distribución del tiempo
-
-| Tarea | Actividad | Tiempo sugerido |
-|---|---|---:|
-| Tarea 1 | Analizar el problema relacional de ViajeYA | 7 min |
-| Tarea 2 | Proponer un documento JSON desnormalizado | 6 min |
-| Tarea 3 | Clasificar escenarios por tipo de NoSQL | 7 min |
-| Tarea 4 | Aplicar decisiones CAP | 5 min |
-| **Total** | &nbsp; | **25 min** |
-
-## Entregables de la práctica
-
-Al finalizar, deberás tener completos los siguientes entregables:
-
-| Entregable | Tarea |
-|---|---|
-| Tabla de problemas relacionales identificados | Tarea 1 |
-| Documento JSON desnormalizado para un hotel | Tarea 2 |
-| Tabla de clasificación de 4 escenarios NoSQL | Tarea 3 |
-| Clasificación CAP de 3 escenarios | Tarea 4 |
-
----
-
 ## Tarea 1. Analizar el problema relacional de ViajeYA
 
 En esta tarea vas a revisar un caso de negocio donde una plataforma de reservas creció rápidamente y su modelo relacional comenzó a presentar problemas de rendimiento, flexibilidad y escalabilidad.

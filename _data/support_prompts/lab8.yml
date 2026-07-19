@@ -1,0 +1,200 @@
+# Prompts de apoyo para la Práctica 8
+# El slug del laboratorio debe ser: lab8
+
+tarea1:
+  title: "Explicar la Tarea 1 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 1 de la
+    Práctica 8 de Couchbase Server.
+
+    Preparé el subdirectorio lab8 dentro del directorio raíz del curso,
+    validé que el contenedor couchbase-lab estuviera activo y confirmé
+    que la Web Console respondiera correctamente.
+
+    Después verifiqué la continuidad con la práctica 7 comprobando que
+    existieran el bucket ecommerce, el scope store y las collections
+    customers, orders y products.
+
+    Luego inserté mediante UPSERT el documento prod::PROD-500 en
+    ecommerce.store.products. El producto contiene seis variantes
+    embebidas dentro del array variants, con campos como sku, size,
+    color, stock y additional_price.
+
+    Consulté el documento mediante USE KEYS, confirmé que tuviera seis
+    variantes y documenté en lab8-design-notes.md por qué el embedding
+    es adecuado cuando los subdocumentos tienen un tamaño controlado,
+    siempre se consultan con el producto y comparten su ciclo de vida.
+
+    Explica el propósito de docker ps, docker start y curl, qué significa
+    recibir un código HTTP 200 y cómo verificar que el modelo
+    ecommerce.store esté disponible antes de insertar nuevos datos.
+
+    Explica además cómo funciona UPSERT, qué diferencia existe entre la
+    document key y product_id, cómo se representa una relación
+    uno-a-muchos mediante un array de subdocumentos y por qué las
+    variantes se embebieron dentro del producto.
+
+    Explica qué riesgos aparecerían si el número de variantes creciera
+    sin límite o si fueran actualizadas de manera altamente concurrente,
+    cómo interpretar las salidas esperadas, cómo validar la tarea y qué
+    errores comunes podrían presentarse.
+
+tarea2:
+  title: "Explicar la Tarea 2 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 2 de la
+    Práctica 8 de Couchbase Server.
+
+    Consulté las variantes embebidas del producto PROD-500 mediante
+    UNNEST, convirtiendo cada elemento del array variants en una fila
+    independiente sin modificar el documento original.
+
+    Después filtré variantes con stock mayor a 10 y utilicé
+    ANY...SATISFIES para localizar productos que tuvieran al menos una
+    variante con stock menor a 10.
+
+    Luego creé el índice de array idx_lab8_product_variant_sku sobre
+    todos los valores v.sku del array variants y utilicé la condición
+    parcial WHERE variants IS NOT MISSING.
+
+    Verifiqué que el índice estuviera online mediante system:indexes,
+    busqué la variante APP-PRO-M-BLK y ejecuté EXPLAIN para comprobar que
+    Couchbase pudiera utilizar el índice creado.
+
+    Explica cómo funciona UNNEST, qué diferencia existe entre consultar
+    todos los elementos del array y evaluar una condición con
+    ANY...SATISFIES, y por qué UNNEST no cambia el documento almacenado.
+
+    Explica cómo funciona un índice de array con ALL ARRAY, qué significa
+    la variable v dentro de la definición, para qué sirve la condición
+    parcial, qué representa el estado online y por qué system:indexes
+    solo confirma que el índice existe, mientras que EXPLAIN permite
+    comprobar si el optimizador lo utiliza.
+
+    Explica cómo interpretar el plan, cómo validar que la búsqueda por
+    SKU funciona correctamente y qué errores comunes podrían presentarse.
+
+tarea3:
+  title: "Explicar la Tarea 3 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 3 de la
+    Práctica 8 de Couchbase Server.
+
+    Creé documentos de cliente utilizando cuatro estrategias diferentes
+    de document keys.
+
+    La estrategia A utilizó un UUID puro sin información semántica.
+
+    La estrategia B utilizó el patrón cust::UUID para conservar unicidad
+    y agregar un prefijo que identifica el tipo de documento.
+
+    La estrategia C utilizó cust::external::CRM-10050, basada en un
+    identificador externo estable y predecible.
+
+    La estrategia D utilizó las keys cust::tenant::mx::10050 y
+    cust::tenant::us::10050 para demostrar aislamiento lógico por tenant,
+    permitiendo reutilizar el mismo local_id sin colisiones.
+
+    Después recuperé los cinco documentos mediante USE KEYS, calculé la
+    longitud de cada key y documenté una tabla comparativa de legibilidad,
+    predecibilidad, unicidad, acceso directo y riesgo principal.
+
+    Explica qué es una document key, por qué debe ser única dentro de una
+    collection y qué ventajas y desventajas tienen UUID puro,
+    tipo::UUID, tipo::external-id y tipo::tenant::ID.
+
+    Explica por qué una key predecible permite acceso directo cuando ya
+    se conoce, cómo el tenant evita colisiones entre organizaciones y por
+    qué no deben incluirse correos, teléfonos, nombres u otros datos
+    personales dentro de las keys.
+
+    Explica también la diferencia entre customer_id y META().id, cómo
+    funciona USE KEYS con varias claves, cómo interpretar la longitud de
+    las keys, cómo validar la tarea y qué errores comunes podrían
+    presentarse.
+
+tarea4:
+  title: "Explicar la Tarea 4 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 4 de la
+    Práctica 8 de Couchbase Server.
+
+    Implementé tres estrategias diferentes para representar el historial
+    de compras de un cliente.
+
+    En embedding total creé el documento cust::embed::2001 con el array
+    purchase_history dentro del mismo cliente. Este modelo permite obtener
+    perfil e historial en una sola lectura, pero el documento crece con
+    cada compra.
+
+    En referencing total creé el cliente cust::ref::2002 y dos documentos
+    de pedido separados en ecommerce.store.orders. Los pedidos contienen
+    customer_key para relacionarse con el cliente.
+
+    En el modelo híbrido creé cust::hybrid::2003 con un resumen embebido
+    en purchase_summary y, al mismo tiempo, dos documentos de pedido
+    separados con el detalle completo.
+
+    Después creé idx_lab8_orders_customer_key sobre customer_key,
+    created_at y total para consultar eficientemente los pedidos
+    referenciados.
+
+    Finalmente ejecuté consultas para obtener el modelo embebido en una
+    lectura, el cliente y sus pedidos referenciados en consultas
+    separadas, y el resumen más el detalle del modelo híbrido.
+
+    Explica las diferencias entre embedding total, referencing total y
+    modelo híbrido, cuántas lecturas requiere cada uno y cómo cambia el
+    crecimiento del documento cliente.
+
+    Explica para qué sirve customer_key, por qué se creó un índice
+    secundario sobre ese campo, cómo funciona una referencia entre
+    documentos y por qué Couchbase no impone una foreign key relacional.
+
+    Explica además qué información representa purchase_summary, por qué
+    el modelo híbrido duplica parcialmente los datos, cómo validar los
+    tres modelos y qué errores comunes podrían presentarse.
+
+tarea5:
+  title: "Explicar la Tarea 5 con IA"
+  prompt: >-
+    Explícame expertamente qué hice en la Tarea 5 de la
+    Práctica 8 de Couchbase Server.
+
+    Agregué una nueva compra a cada una de las tres estrategias de
+    modelado.
+
+    En embedding total utilicé UPDATE con USE KEYS y ARRAY_APPEND para
+    agregar un nuevo elemento a purchase_history dentro del documento
+    cliente.
+
+    En referencing total utilicé UPSERT para crear un nuevo documento de
+    pedido sin modificar el cliente.
+
+    En el modelo híbrido realicé dos escrituras: primero inserté el pedido
+    separado y después actualicé purchase_summary con el nuevo total de
+    órdenes, monto histórico, fecha de última compra y la lista de las
+    tres órdenes más recientes mediante ARRAY_PREPEND y un slice.
+
+    También comparé con EXPLAIN el acceso directo mediante USE KEYS frente
+    a una consulta por customer_key resuelta con
+    idx_lab8_orders_customer_key.
+
+    Finalmente documenté una matriz de trade-offs sobre lecturas,
+    escrituras, crecimiento, concurrencia y consistencia, y validé los
+    documentos e índices creados.
+
+    Explica cómo funcionan ARRAY_APPEND, ARRAY_PREPEND y el slice [0:3],
+    por qué el modelo embebido requiere una actualización del documento
+    cliente y por qué referencing crea un documento independiente.
+
+    Explica el riesgo de doble escritura del modelo híbrido, qué ocurre si
+    el pedido se inserta pero falla la actualización del resumen y cómo
+    podrían utilizarse transacciones, Eventing o reconciliación para
+    mantener la consistencia.
+
+    Explica además cómo interpretar EXPLAIN con USE KEYS y con una consulta
+    indexada, por qué no debe aparecer un PrimaryScan para localizar keys
+    conocidas, cómo comprobar el uso de idx_lab8_orders_customer_key,
+    cómo validar las salidas esperadas y qué errores comunes podrían
+    presentarse.
