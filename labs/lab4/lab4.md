@@ -43,35 +43,37 @@ En esta práctica conservarás el directorio raíz creado anteriormente y única
 
 ### 🗂️ Crear y abrir el subdirectorio de la práctica
 
-- {% include step_label.html %} Abre **Docker Desktop** y espera a que el motor esté en ejecución.
-- {% include step_label.html %} Abre **Visual Studio Code**.
-- {% include step_label.html %} En VS Code, abre el directorio raíz del curso:
+- {% include step_label.html %} Abre **Docker Desktop** y confirma que el motor indique estado activo, porque `couchbase-lab` depende del daemon local para ejecutar todos sus servicios.
+- {% include step_label.html %} Abre **Visual Studio Code** y espera su carga completa, ya que utilizarás el Explorador y la terminal integrada durante toda la práctica.
+- {% include step_label.html %} Abre `C:\LABS\couchbase-nosql` en Visual Studio Code para mantener visibles los archivos del curso y trabajar desde la ruta esperada.
 
   ```text
   C:\LABS\couchbase-nosql
   ```
 
-- {% include step_label.html %} Abre una terminal integrada desde **Terminal → New Terminal**.
-- {% include step_label.html %} Verifica que el perfil seleccionado sea **Git Bash**.
-- {% include step_label.html %} Crea el subdirectorio de la práctica:
+- {% include step_label.html %} Selecciona **Terminal → New Terminal** en Visual Studio Code para abrir la consola integrada desde la que ejecutarás las operaciones de la práctica.
+- {% include step_label.html %} Comprueba en el selector del panel Terminal que **Git Bash** sea el perfil activo, porque los comandos utilizan sintaxis y rutas compatibles con Bash.
+- {% include step_label.html %} Crea el subdirectorio de la práctica desde Git Bash para crear de forma idempotente el directorio `/c/LABS/couchbase-nosql/lab4` donde se organizarán los archivos de esta práctica.
 
   ```bash
   mkdir -p /c/LABS/couchbase-nosql/lab4
   ```
 
-- {% include step_label.html %} Cambia al subdirectorio:
+- {% include step_label.html %} Cambia al subdirectorio desde Git Bash para cambiar la ubicación activa a `/c/LABS/couchbase-nosql/lab4` y evitar operaciones posteriores desde un directorio incorrecto.
 
   ```bash
   cd /c/LABS/couchbase-nosql/lab4
   ```
 
-- {% include step_label.html %} Confirma tu ubicación:
+- {% include step_label.html %} Confirma tu ubicación desde Git Bash para mostrar la ruta activa y confirmar que Git Bash está ubicado en el subdirectorio asignado a esta práctica.
 
   ```bash
   pwd
   ```
 
 **Salida esperada:**
+
+Para validar `crear y abrir el subdirectorio de trabajo`, verifica la referencia siguiente y confirma que la respuesta permita mostrar la ruta activa y confirmar que Git Bash está ubicado en el subdirectorio asignado a esta práctica; detente si aparece un error.
 
 ```text
 /c/LABS/couchbase-nosql/lab4
@@ -88,7 +90,7 @@ En esta tarea confirmarás que el entorno continúa disponible y consultarás `s
 
 ### Tarea 1.1. Verificar que el contenedor está activo
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Consulta en Git Bash el estado de `couchbase-lab` y confirma que aparezca activo antes de utilizar Web Console, Query e Index Service.
 
   {%raw%}
   ```bash
@@ -98,18 +100,20 @@ En esta tarea confirmarás que el entorno continúa disponible y consultarás `s
 
 **Salida esperada:**
 
+Para validar `Verificar que el contenedor está activo`, verifica la referencia siguiente y confirma que la respuesta permita consultar los contenedores y comprobar que `couchbase-lab` permanezca activo antes de utilizar sus servicios; detente si aparece un error.
+
 ```text
 NAMES           STATUS
 couchbase-lab   Up ...
 ```
 
-- {% include step_label.html %} Si no aparece activo, inícialo:
+- {% include step_label.html %} Inicia `couchbase-lab` solamente si está detenido y espera la confirmación de Docker antes de acceder a los servicios del clúster.
 
   ```bash
   docker start couchbase-lab
   ```
 
-- {% include step_label.html %} Valida la Web Console:
+- {% include step_label.html %} Solicita la Web Console por el puerto 8091 y confirma HTTP 200 como evidencia de que el servicio administrativo está disponible.
 
   ```bash
   curl -s -o /dev/null -w "Web Console: HTTP %{http_code}\n" \
@@ -118,13 +122,15 @@ couchbase-lab   Up ...
 
 **Salida esperada:**
 
+Para validar `Verificar que el contenedor está activo`, verifica la referencia siguiente y confirma que la respuesta permita solicitar la Web Console por el puerto 8091 e interpretar el código HTTP como prueba de disponibilidad; detente si aparece un error.
+
 ```text
 Web Console: HTTP 200
 ```
 
 ### Tarea 1.2. Validar que el contenedor utiliza Enterprise Edition
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Inspecciona la imagen configurada en `couchbase-lab` y verifica que sea exactamente `couchbase/server:enterprise-7.6.2`.
 
   {%raw%}
   ```bash
@@ -133,6 +139,8 @@ Web Console: HTTP 200
   {%endraw%}
 
 **Salida esperada:**
+
+Para validar `Validar que el contenedor utiliza Enterprise Edition`, verifica la referencia siguiente y confirma que la respuesta permita consultar la configuración de `couchbase-lab` y verificar que utiliza la imagen Enterprise 7.6.2 requerida; detente si aparece un error.
 
 ```text
 Imagen activa: couchbase/server:enterprise-7.6.2
@@ -143,13 +151,13 @@ Imagen activa: couchbase/server:enterprise-7.6.2
 
 ### Tarea 1.3. Abrir el Query Editor
 
-- {% include step_label.html %} Abre `http://localhost:8091`.
-- {% include step_label.html %} Inicia sesión con `Administrator` y `Password123!`.
-- {% include step_label.html %} Abre **Query**.
+- {% include step_label.html %} Abre `http://localhost:8091` en el navegador para ingresar a Web Console y utilizar Query Workbench durante la práctica.
+- {% include step_label.html %} Inicia sesión en la Web Console con `Administrator` y `Password123!` para acceder al clúster mediante las credenciales administrativas definidas.
+- {% include step_label.html %} Selecciona **Query** en la navegación lateral de la Web Console para abrir Query Workbench y ejecutar las sentencias SQL++ de la práctica.
 
 ### Tarea 1.4. Inventariar los índices existentes
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Consulta `system:indexes` en Query Workbench para inventariar nombre, keyspace, claves, condición y estado de los índices existentes.
 
   ```sql
   SELECT name,
@@ -168,9 +176,11 @@ Imagen activa: couchbase/server:enterprise-7.6.2
 
 **Resultado esperado:** una lista de índices de las collections del scope `inventory`.
 
+Para validar `Inventariar los índices existentes`, una lista de índices de las collections del scope `inventory`. y confirma que la respuesta permita inventariar en `system:indexes` los índices del bucket, scope y collections especificados por los filtros; detente si aparece un error.
+
 ### Tarea 1.5. Resumir índices por collection
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Agrupa `system:indexes` por colección para contar los índices y reunir sus nombres antes de crear las definiciones de esta práctica.
 
   ```sql
   SELECT keyspace_id AS collection_name,
@@ -184,6 +194,8 @@ Imagen activa: couchbase/server:enterprise-7.6.2
   ```
 
 **Validación:** deben aparecer collections como `airline`, `airport`, `hotel` y `route`.
+
+Para validar `Resumir índices por collection`, deben aparecer collections como `airline`, `airport`, `hotel` y `route`. y confirma que la respuesta permita agrupar los registros de `system:indexes` por collection y comparar la cantidad y los nombres disponibles; detente si aparece un error.
 
 {% assign results = site.data.task-results[page.slug].results %}
 {% capture r1 %}{{ results[0] }}{% endcapture %}
@@ -199,14 +211,14 @@ En esta tarea crearás cuatro tipos de índices con nombres exclusivos para la p
 
 ### Tarea 2.1. Crear un índice secundario simple
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Crea `idx_lab4_airline_country` sobre `airline.country` para soportar búsquedas exactas de aerolíneas filtradas por país.
 
   ```sql
   CREATE INDEX IF NOT EXISTS idx_lab4_airline_country
   ON `travel-sample`.inventory.airline(country);
   ```
 
-- {% include step_label.html %} Valida:
+- {% include step_label.html %} Consulta `system:indexes` y confirma que `idx_lab4_airline_country` tenga la clave esperada y alcance el estado `online`.
 
   ```sql
   SELECT name, state, `index_key`
@@ -214,7 +226,7 @@ En esta tarea crearás cuatro tipos de índices con nombres exclusivos para la p
   WHERE name = "idx_lab4_airline_country";
   ```
 
-- {% include step_label.html %} Prueba:
+- {% include step_label.html %} Consulta aerolíneas de `United States` para comprobar que el índice simple atienda el predicado exacto definido sobre `country`.
 
   ```sql
   SELECT name, iata, country
@@ -226,14 +238,14 @@ En esta tarea crearás cuatro tipos de índices con nombres exclusivos para la p
 
 ### Tarea 2.2. Crear un índice compuesto
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Crea `idx_lab4_airline_country_callsign` con claves ordenadas para cubrir consultas que filtren país y distintivo de llamada.
 
   ```sql
   CREATE INDEX IF NOT EXISTS idx_lab4_airline_country_callsign
   ON `travel-sample`.inventory.airline(country, callsign);
   ```
 
-- {% include step_label.html %} Prueba:
+- {% include step_label.html %} Consulta `name`, `country` y `callsign` con los predicados establecidos para validar el uso funcional del índice compuesto.
 
   ```sql
   SELECT name, country, callsign
@@ -247,7 +259,7 @@ En esta tarea crearás cuatro tipos de índices con nombres exclusivos para la p
 
 ### Tarea 2.3. Crear un índice parcial
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Crea `idx_lab4_airline_us_name` con condición parcial para indexar nombres únicamente de aerolíneas de `United States`.
 
   ```sql
   CREATE INDEX IF NOT EXISTS idx_lab4_airline_us_name
@@ -255,7 +267,7 @@ En esta tarea crearás cuatro tipos de índices con nombres exclusivos para la p
   WHERE country = "United States";
   ```
 
-- {% include step_label.html %} Prueba:
+- {% include step_label.html %} Consulta aerolíneas estadounidenses cuyo nombre comienza con `A` para verificar que el predicado satisface la condición parcial.
 
   ```sql
   SELECT name, iata, country
@@ -268,7 +280,7 @@ En esta tarea crearás cuatro tipos de índices con nombres exclusivos para la p
 
 ### Tarea 2.4. Crear un índice de arreglo
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Crea `idx_lab4_route_schedule_day` con una clave de arreglo para indexar individualmente los valores `day` incluidos en `schedule`.
 
   ```sql
   CREATE INDEX IF NOT EXISTS idx_lab4_route_schedule_day
@@ -277,7 +289,7 @@ En esta tarea crearás cuatro tipos de índices con nombres exclusivos para la p
   );
   ```
 
-- {% include step_label.html %} Prueba:
+- {% include step_label.html %} Consulta rutas con alguna salida en el día 1 mediante `ANY ... SATISFIES` para validar la correspondencia con la clave de arreglo.
 
   ```sql
   SELECT sourceairport, destinationairport, airline
@@ -288,7 +300,7 @@ En esta tarea crearás cuatro tipos de índices con nombres exclusivos para la p
 
 ### Tarea 2.5. Validar los cuatro índices
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Consulta conjuntamente los cuatro índices en `system:indexes` y confirma claves, condiciones, keyspaces y estado `online`.
 
   ```sql
   SELECT name,
@@ -310,6 +322,8 @@ En esta tarea crearás cuatro tipos de índices con nombres exclusivos para la p
 
 **Resultado esperado:** 4 filas con estado `online`.
 
+Para validar `Validar los cuatro índices`, 4 filas con estado `online`. y confirma que la respuesta permita consultar `system:indexes` y verificar conjuntamente los índices enumerados en el filtro `name IN`; detente si aparece un error.
+
 {% assign results = site.data.task-results[page.slug].results %}
 {% capture r2 %}{{ results[1] }}{% endcapture %}
 {% include task-result.html title="Tarea finalizada" content=r2 %}
@@ -324,7 +338,7 @@ En esta tarea crearás un índice con construcción diferida y observarás su ca
 
 ### Tarea 3.1. Crear el índice sin construirlo
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Crea `idx_lab4_airport_city_deferred` con `defer_build` para separar el registro de la definición y la construcción física.
 
   ```sql
   CREATE INDEX IF NOT EXISTS idx_lab4_airport_city_deferred
@@ -334,7 +348,7 @@ En esta tarea crearás un índice con construcción diferida y observarás su ca
 
 ### Tarea 3.2. Verificar el estado deferred
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Consulta `system:indexes` y verifica que `idx_lab4_airport_city_deferred` figure registrado con estado `deferred`.
 
   ```sql
   SELECT name, state, `index_key`
@@ -344,9 +358,11 @@ En esta tarea crearás un índice con construcción diferida y observarás su ca
 
 **Salida esperada:** `state = "deferred"`.
 
+Para validar `Verificar el estado deferred`, `state = "deferred"`. y confirma que la respuesta permita consultar `system:indexes` y confirmar la definición y el estado del índice `idx_lab4_airport_city_deferred`; detente si aparece un error.
+
 ### Tarea 3.3. Construir el índice
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Inicia con `BUILD INDEX` la construcción física del índice diferido para que Index Service procese los documentos del keyspace.
 
   ```sql
   BUILD INDEX ON `travel-sample`.inventory.airport(
@@ -356,7 +372,7 @@ En esta tarea crearás un índice con construcción diferida y observarás su ca
 
 ### Tarea 3.4. Observar la transición de estados
 
-- {% include step_label.html %} Ejecuta varias veces:
+- {% include step_label.html %} Consulta periódicamente `system:indexes` y observa la transición de `deferred` o `building` hasta alcanzar el estado `online`.
 
   ```sql
   SELECT name, state
@@ -365,6 +381,8 @@ En esta tarea crearás un índice con construcción diferida y observarás su ca
   ```
 
 **Estados esperados:**
+
+Para validar `Observar la transición de estados`, verifica la referencia siguiente y confirma que la respuesta permita consultar `system:indexes` y confirmar la definición y el estado del índice `idx_lab4_airport_city_deferred`; detente si aparece un error.
 
 ```text
 deferred → building → online
@@ -375,7 +393,7 @@ deferred → building → online
 
 ### Tarea 3.5. Probar el índice
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Consulta aeropuertos de San Francisco en Estados Unidos para comprobar el índice diferido después de quedar disponible.
 
   ```sql
   SELECT airportname, city, country
@@ -387,6 +405,8 @@ deferred → building → online
   ```
 
 **Validación:** el índice debe estar `online` y la consulta debe ejecutarse sin errores.
+
+Para validar `Probar el índice`, el índice debe estar `online` y la consulta debe ejecutarse sin errores. y confirma que la respuesta permita consultar ``travel-sample`.inventory.airport` con el filtro `city = "San Francisco" AND country = "United States"` y comprobar las filas y el orden obtenidos; detente si aparece un error.
 
 {% assign results = site.data.task-results[page.slug].results %}
 {% capture r3 %}{{ results[2] }}{% endcapture %}
@@ -402,7 +422,7 @@ En esta tarea crearás un índice particionado por hash sobre la collection `rou
 
 ### Tarea 4.1. Crear el índice particionado
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Crea `idx_lab4_route_source_partitioned` con partición HASH sobre `sourceairport` para estudiar su definición en Enterprise Edition.
 
   ```sql
   CREATE INDEX IF NOT EXISTS idx_lab4_route_source_partitioned
@@ -419,7 +439,7 @@ En esta tarea crearás un índice particionado por hash sobre la collection `rou
 
 ### Tarea 4.2. Validar su definición
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Consulta `system:indexes` y confirma las claves, la expresión de partición y el estado del índice particionado recién creado.
 
   ```sql
   SELECT
@@ -433,9 +453,11 @@ En esta tarea crearás un índice particionado por hash sobre la collection `rou
 
 **Validación:** el índice debe aparecer `online` y el campo `partition` debe indicar particionado por hash.
 
+Para validar `Validar su definición`, el índice debe aparecer `online` y el campo `partition` debe indicar particionado por hash. y confirma que la respuesta permita consultar `system:indexes` y confirmar la definición y el estado del índice `idx_lab4_route_source_partitioned`; detente si aparece un error.
+
 ### Tarea 4.3. Probar una consulta compatible
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Consulta las rutas cuyo aeropuerto de origen es `SFO` para probar un predicado compatible con la clave del índice particionado.
 
   ```sql
   SELECT sourceairport, destinationairport, airline, distance
@@ -447,7 +469,7 @@ En esta tarea crearás un índice particionado por hash sobre la collection `rou
 
 ### Tarea 4.4. Revisar el plan con EXPLAIN
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Obtén el plan con `EXPLAIN` e identifica el índice seleccionado, sus spans y los operadores empleados por Query Service.
 
   ```sql
   EXPLAIN
@@ -458,7 +480,7 @@ En esta tarea crearás un índice particionado por hash sobre la collection `rou
   LIMIT 10;
   ```
 
-- {% include step_label.html %} Busca en el resultado:
+- {% include step_label.html %} Localiza `idx_lab4_route_source_partitioned` en el plan y confirma que Query Service eligió la definición esperada para el filtro.
 
   ```text
   idx_lab4_route_source_partitioned
@@ -468,6 +490,8 @@ En esta tarea crearás un índice particionado por hash sobre la collection `rou
 {: .lab-note .info .compact}
 
 ### Tarea 4.5. Comprender la limitación del nodo único
+
+- {% include step_label.html %} Registra que la partición se observa lógicamente, pero un clúster de un nodo no permite evaluar distribución ni tolerancia a fallos.
 
 ```text
 Clúster actual:
@@ -495,16 +519,16 @@ En esta tarea revisarás los índices desde la Web Console, generarás actividad
 
 ### Tarea 5.1. Abrir la sección Indexes
 
-- {% include step_label.html %} En la Web Console, abre **Indexes**.
-- {% include step_label.html %} Localiza los índices con prefijo `idx_lab4_`.
-- {% include step_label.html %} Identifica nombre, keyspace, estado, campos indexados, condición parcial, nodo y métricas visibles.
+- {% include step_label.html %} Selecciona **Indexes** en la navegación lateral de la Web Console para examinar la definición, el estado y las métricas del Index Service.
+- {% include step_label.html %} En **Indexes**, filtra o recorre la lista hasta localizar los nombres con prefijo `idx_lab4_` y confirma que correspondan con esta práctica.
+- {% include step_label.html %} En la tabla de **Indexes**, revisa nombre, keyspace, estado, campos, condición, nodo y métricas para interpretar cada índice creado.
 
 > **NOTA:** Las columnas exactas pueden variar según la edición y versión.
 {: .lab-note .info .compact}
 
 ### Tarea 5.2. Generar uso sobre un índice
 
-- {% include step_label.html %} Regresa a **Query** y ejecuta entre 3 y 5 veces:
+- {% include step_label.html %} Regresa a **Query**, ejecuta la consulta entre tres y cinco veces y espera cada resultado para generar actividad medible sobre el índice asociado.
 
   ```sql
   SELECT name, country, callsign
@@ -514,11 +538,11 @@ En esta tarea revisarás los índices desde la Web Console, generarás actividad
   LIMIT 20;
   ```
 
-- {% include step_label.html %} Regresa a **Indexes** y revisa si las métricas reflejan nuevas solicitudes o actividad.
+- {% include step_label.html %} Regresa a **Indexes** y comprueba si las métricas de los índices reflejan solicitudes nuevas después de ejecutar repetidamente la consulta.
 
 ### Tarea 5.3. Consultar la configuración del Index Service
 
-- {% include step_label.html %} En Git Bash, ejecuta:
+- {% include step_label.html %} Consulta desde Git Bash la configuración de Index Service y revisa en el JSON el modo de almacenamiento activo del nodo.
 
   ```bash
   curl -s -u Administrator:Password123! \
@@ -529,6 +553,8 @@ En esta tarea revisarás los índices desde la Web Console, generarás actividad
 **Salida esperada:** un objeto JSON con la configuración del Index Service. En Enterprise Edition, el modo de almacenamiento estándar debe indicar `plasma`.
 
 ### Tarea 5.4. Validar capacidades de Enterprise Edition
+
+- {% include step_label.html %} Relaciona índices particionados, réplicas y distribución con Enterprise Edition, diferenciando capacidades disponibles de las probadas en un nodo.
 
 | Capacidad | Estado en el laboratorio |
 |---|---|
@@ -545,7 +571,7 @@ En esta tarea revisarás los índices desde la Web Console, generarás actividad
 
 ### Tarea 5.5. Consolidar los índices creados
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Consulta en `system:indexes` todas las definiciones `idx_lab4_%` y consolida keyspace, claves, condición, partición y estado.
 
   ```sql
   SELECT
@@ -564,9 +590,11 @@ En esta tarea revisarás los índices desde la Web Console, generarás actividad
 
 **Resultado esperado:** 6 índices, todos en estado `online`.
 
+Para validar `Consolidar los índices creados`, 6 índices, todos en estado `online`. y confirma que la respuesta permita consultar `system:indexes` y revisar los índices cuyo nombre coincide con `idx_lab4_%`; detente si aparece un error.
+
 ### Tarea 5.6. Ejecutar validación final desde Git Bash
 
-- {% include step_label.html %} Ejecuta:
+- {% include step_label.html %} Envía por REST una sentencia SQL++ a Query Service y confirma `status: success` junto con los índices `idx_lab4_%` esperados.
 
   ```bash
   curl -s -u Administrator:Password123! \
@@ -576,6 +604,8 @@ En esta tarea revisarás los índices desde la Web Console, generarás actividad
   ```
 
 **Salida esperada:** nombres de los índices, `state: online` y `status: success`.
+
+Para validar `Ejecutar validación final desde Git Bash`, nombres de los índices, `state: online` y `status: success`. y confirma que la respuesta permita enviar una sentencia SQL++ al servicio Query del puerto 8093 y comprobar el estado incluido en la respuesta JSON; detente si aparece un error.
 
 {% assign results = site.data.task-results[page.slug].results %}
 {% capture r5 %}{{ results[4] }}{% endcapture %}
@@ -591,6 +621,8 @@ En esta tarea revisarás los índices desde la Web Console, generarás actividad
 
 Verifica su definición:
 
+- {% include step_label.html %} Consulta los índices `idx_lab4_%` para distinguir una definición ya existente y decidir si puede reutilizarse o requiere otro nombre.
+
 ```sql
 SELECT name, keyspace_id, `index_key`, condition, state
 FROM system:indexes
@@ -599,6 +631,8 @@ ORDER BY name;
 ```
 
 ### Problema 2. El índice permanece en deferred
+
+- {% include step_label.html %} Repite `BUILD INDEX` sobre `idx_lab4_airport_city_deferred` cuando continúe diferido y verifica que comience la construcción.
 
 ```sql
 BUILD INDEX ON `travel-sample`.inventory.airport(
@@ -609,6 +643,8 @@ BUILD INDEX ON `travel-sample`.inventory.airport(
 ### Problema 3. El índice permanece en building
 
 Espera unos segundos y revisa nuevamente:
+
+- {% include step_label.html %} Consulta nuevamente los estados `idx_lab4_%` después de esperar para confirmar si Index Service completó la construcción pendiente.
 
 ```sql
 SELECT name, state
@@ -621,6 +657,8 @@ ORDER BY name;
 
 Verifica que esté `online`:
 
+- {% include step_label.html %} Verifica que `idx_lab4_route_source_partitioned` esté `online` y que su clave corresponda al predicado evaluado por `EXPLAIN`.
+
 ```sql
 SELECT name, state, `index_key`
 FROM system:indexes
@@ -628,6 +666,8 @@ WHERE name = "idx_lab4_route_source_partitioned";
 ```
 
 Después prueba:
+
+- {% include step_label.html %} Genera nuevamente el plan para `sourceairport = "SFO"` y revisa qué índice, spans y operadores selecciona el optimizador.
 
 ```sql
 EXPLAIN
@@ -644,6 +684,8 @@ WHERE sourceairport = "SFO";
 
 **Solución:**
 
+- {% include step_label.html %} Inspecciona la imagen del contenedor si falla el índice particionado y confirma que corresponda a Couchbase Enterprise 7.6.2.
+
 {%raw%}
 ```bash
 docker inspect couchbase-lab   --format "Imagen activa: {{.Config.Image}}"
@@ -659,6 +701,8 @@ Imagen activa: couchbase/server:enterprise-7.6.2
 Si aparece la imagen Community, vuelve a la Práctica 2 y recrea el contenedor con Enterprise Edition. Después repite la configuración del clúster y la carga de `travel-sample`.
 
 ### Problema 6. python -m json.tool falla
+
+- {% include step_label.html %} Consulta las versiones de `python` y `python3` disponibles en Git Bash para elegir el intérprete capaz de ejecutar el módulo `json.tool`.
 
 ```bash
 python --version
