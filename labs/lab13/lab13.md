@@ -1,6 +1,6 @@
 ---
 layout: lab
-title: "Práctica 13: Creación y validación de analyzers personalizados para búsqueda"
+title: "Práctica 13: Creación de analyzers personalizados para búsqueda"
 permalink: /lab13/lab13/
 images_base: /labs/lab13/img
 duration: "60 minutos"

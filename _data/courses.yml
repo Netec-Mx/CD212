@@ -77,7 +77,7 @@ cd212:
       desc: "Configura mappings Search avanzados, campos anidados, Store Field Data, índices scoped y un alias federado."
 
     - id: lab13
-      title: "Creación y validación de analyzers personalizados para búsqueda"
+      title: "Creación de analyzers personalizados para búsqueda"
       url: "/lab13/lab13/"
       duration: "60 min"
       desc: "Crea analyzers personalizados en español, normaliza texto y valida búsquedas lingüísticas y códigos SKU exactos."
